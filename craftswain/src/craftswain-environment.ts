@@ -1,14 +1,14 @@
 import TestEnvironment from 'jest-environment-node';
-import { Builder, Browser, By, Key, until } from 'selenium-webdriver';
-import { IWebDriver } from 'selenium-webdriver/lib/webdriver';
+import Winston from 'winston';
+import type { Global } from '@jest/types';
+import { CraftswainGlobal } from './global';
 
-// my-custom-environment
-
-class SeleniumEnvironment extends TestEnvironment {
+export class CraftswainEnvironment extends TestEnvironment {
+  declare global: Global & CraftswainGlobal;
   testPath: any;
   docblockPragmas: any;
 
-  constructor(config, context) {
+  constructor(config: any, context: any) {
     super(config, context);
     this.testPath = context.testPath;
     this.docblockPragmas = context.docblockPragmas;
@@ -16,9 +16,14 @@ class SeleniumEnvironment extends TestEnvironment {
 
   async setup() {
     await super.setup();
-    const driver = (await new Builder().forBrowser(Browser.CHROME).build()) as IWebDriver;
-    (this.global as any).webdriver = driver;
-    await driver.get('http://the-internet.herokuapp.com/');
+    
+    this.global.logger = Winston.createLogger({
+      level: 'info',
+      format: Winston.format.simple(),
+      transports: [
+        new Winston.transports.Console()
+      ],
+    });
 
     // Will trigger if docblock contains @my-custom-pragma my-pragma-value
     /*if (this.docblockPragmas['my-custom-pragma'] === 'my-pragma-value') {
@@ -27,7 +32,7 @@ class SeleniumEnvironment extends TestEnvironment {
   }
 
   async teardown() {
-    (this.global as any).webdriver.quit();
+    this.global.logger?.close();
     await super.teardown();
   }
 
@@ -35,11 +40,9 @@ class SeleniumEnvironment extends TestEnvironment {
     return super.getVmContext();
   }
 
-  async handleTestEvent(event, state) {
+  async handleTestEvent(event: any, state: any) {
     if (event.name === 'test_start') {
       // ...
     }
   }
 }
-
-module.exports = SeleniumEnvironment;

@@ -123,8 +123,14 @@ dist
 .vscode-test
 
 # yarn v2
-.yarn/cache
+.yarn/cachen
 .yarn/unplugged
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Yarn
+.yarn
+
+# Typescript output
+out/

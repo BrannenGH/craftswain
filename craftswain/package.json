@@ -1,0 +1,15 @@
+{
+  "name": "craftswain",
+  "packageManager": "yarn@3.4.1",
+  "version": "0.0.1",
+  "main": "out/index.js",
+  "types": "out/index.d.ts",
+  "dependencies": {
+    "jest-environment-node": "^29.4.3",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@jest/types": "^29.4.3",
+    "typescript": "^4.9.5"
+  }
+}
