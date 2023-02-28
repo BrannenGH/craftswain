@@ -7,5 +7,5 @@ import { WebDriver } from 'selenium-webdriver';
 
 test("Open browser and go to webpage", async () => {
     const homepage = new Homepage();
-    expect(await homepage.lnkAbTesting.isDisplayed()).toBe(true);
+    expect(await (await homepage.lnkAbTesting).isDisplayed()).toBe(true);
 });
