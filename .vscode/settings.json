@@ -1,6 +1,7 @@
 {
   "jest.autoRun": "off",
-  "jest.jestCommandLine": "yarn test",
+  "jest.jestCommandLine": "yarn jest",
+  "jest.rootPath": "test/craftswain-test-scripts",
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true

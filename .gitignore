@@ -134,3 +134,6 @@ dist
 
 # Typescript output
 out/
+
+# Webdrivers
+chromedriver
