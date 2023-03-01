@@ -1,6 +1,6 @@
 #/bin/zsh
 
 yarn install
-tsc -p ./craftswain/ &
-tsc -p ./craftswain-selenium/ &
+yarn tsc -p ./craftswain/ &
+yarn tsc -p ./craftswain-selenium/ &
 clear
