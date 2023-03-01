@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"name": "craftswain",
+			"path": "../craftswain"
+		},
+		{
+			"name": "craftswain-selenium",
+			"path": "../craftswain-selenium"
+		},
+		{
+			"name": "craftswain-test-scripts",
+			"path": "../craftswain-test-scripts"
+		},
+		{
+			"name": "root",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"typescript.tsdk": ".yarn/sdks/typescript/lib",
+		"typescript.enablePromptUseWorkspaceTsdk": true,
+		"jest.disabledWorkspaceFolders": [
+			"craftswain",
+			"craftswain-selenium",
+			"Root"
+		]
+	}
+}

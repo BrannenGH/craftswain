@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/javascript-node:18
+    volumes:
+      - ../..:/workspaces:cached
+    command: [/bin/sleep, infinity]
+    ports:
+      - "4444:4444"
+
+  selenium:
+    image: selenium/standalone-chrome:110.0
+    restart: unless-stopped

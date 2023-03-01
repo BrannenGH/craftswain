@@ -1,27 +1,17 @@
-import {Builder, Browser, By, Key, until, WebElement, WebDriver} from 'selenium-webdriver';
-import Winston, { Logger } from 'winston';
+import { By, WebDriver} from 'selenium-webdriver';
+import { Logger } from 'winston';
+import { PageModel } from './page-model';
 
-const FIRST_LINK_SELECTOR = "ul li:nth-of-type(1) a";
-var abtestinglink = By.css(FIRST_LINK_SELECTOR);
-
-// Jest injected
-declare const global: any;
-
-export class Homepage {
-    private webDriver: WebDriver;
-    private logger: Logger;
-
+export class Homepage extends PageModel {
     constructor(
-        webDriver: WebDriver = global.webDriver,
-        logger: Logger = global.logger
+        webDriver?: WebDriver,
+        logger?: Logger 
     ) {
-        this.webDriver = webDriver;
-        this.logger = logger;
+        super(webDriver, logger);
     }
 
     get lnkAbTesting() {
-        this.logger.log("info", `Getting ${FIRST_LINK_SELECTOR}`)
-        return this.webDriver.findElement(By.css(FIRST_LINK_SELECTOR));
+        return this.webDriver.findElement(By.css("ul li:nth-of-type(1) a"));
     }
 }
 

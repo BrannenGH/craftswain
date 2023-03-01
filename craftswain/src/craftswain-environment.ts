@@ -1,14 +1,15 @@
 import TestEnvironment from 'jest-environment-node';
 import Winston from 'winston';
-import type { Global } from '@jest/types';
+import { Global } from '@jest/types';
 import { CraftswainGlobal } from './global';
+import { EnvironmentContext, JestEnvironmentConfig } from '@jest/environment';
 
-export class CraftswainEnvironment extends TestEnvironment {
-  declare global: Global & CraftswainGlobal;
+export class CraftswainEnvironment<Config = {}> extends TestEnvironment {
+  declare global: Global.Global & CraftswainGlobal & Config;
   testPath: any;
   docblockPragmas: any;
 
-  constructor(config: any, context: any) {
+  constructor(config: JestEnvironmentConfig, context: EnvironmentContext) {
     super(config, context);
     this.testPath = context.testPath;
     this.docblockPragmas = context.docblockPragmas;
