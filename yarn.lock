@@ -2500,7 +2500,7 @@ __metadata:
     "@types/jest": ^29.4.0
     "@types/node": ^18.14.2
     "@types/selenium-webdriver": ^4.1.12
-    craftswain: "*"
+    craftswain: 0.0.3
     jest-environment-node: ^29.4.3
     selenium-webdriver: ^4.8.1
     typescript: ^4.9.5
@@ -2530,7 +2530,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"craftswain@*, craftswain@workspace:craftswain":
+"craftswain@*, craftswain@0.0.3, craftswain@workspace:craftswain":
   version: 0.0.0-use.local
   resolution: "craftswain@workspace:craftswain"
   dependencies:

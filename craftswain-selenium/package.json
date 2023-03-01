@@ -1,16 +1,13 @@
 {
   "name": "craftswain-selenium",
-  "version": "0.0.1",
-  "description": "Selenium bindings for renassiance",
+  "version": "0.0.3",
+  "description": "Easy way to expose selenium to Jest.",
   "main": "out/index.js",
   "types": "out/index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Brannen Hall",
   "license": "MIT",
   "dependencies": {
-    "craftswain": "*",
+    "craftswain": "0.0.3",
     "jest-environment-node": "^29.4.3",
     "selenium-webdriver": "^4.8.1",
     "winston": "^3.8.2"

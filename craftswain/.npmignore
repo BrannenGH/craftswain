@@ -133,3 +133,5 @@ dist
 src/
 *.ts
 tsconfig.json
+
+.editorconfig
