@@ -4,14 +4,16 @@ import { PageModel } from '@craftswain/selenium';
 
 export class Homepage extends PageModel {
     constructor(
-        webDriver?: WebDriver,
-        logger?: Logger 
+        webDriver?: Promise<WebDriver>,
+        logger?: Promise<Logger>
     ) {
         super(webDriver, logger);
     }
 
     get lnkAbTesting() {
-        return this.webDriver.findElement(By.css("ul li:nth-of-type(1) a"));
+        return (async () => {
+            return (await this.webDriver).findElement(By.css("ul li:nth-of-type(1) a"))
+        })();
     }
 }
 

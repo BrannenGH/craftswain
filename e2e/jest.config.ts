@@ -1,7 +1,7 @@
 import type {Config} from 'jest';
 
 const config: Config = {
-  testEnvironment: "craftswain",
+  testEnvironment: "@craftswain/jest",
   clearMocks: true,
   coverageProvider: "v8",
   verbose: true,

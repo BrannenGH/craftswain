@@ -1,16 +1,17 @@
 import TestEnvironment from 'jest-environment-node';
 import Winston from 'winston';
-import { CraftswainGlobal } from './global/craftswain-global';
 import { EnvironmentContext, JestEnvironmentConfig } from '@jest/environment';
 import { CraftswainConfig } from "./config/craftswain-config";
-import { loadConfig } from './index';
+import CraftswainGlobal, { loadConfig } from '@craftswain/core';
+import { join } from 'node:path';
+import { createRequire } from 'module';
+import { Global } from '@jest/types';
 
 export class CraftswainEnvironment<ChildConfig = {}, ChildGlobal = {}> extends TestEnvironment {
-  declare global: ChildGlobal & CraftswainGlobal;
+  declare global: Global.Global;
   config: ChildConfig & CraftswainConfig;
   testPath: any;
   docblockPragmas: any;
-  modules: TestEnvironment[] = [];
 
   constructor(config: JestEnvironmentConfig, context: EnvironmentContext) {
     super(config, context);
@@ -22,21 +23,19 @@ export class CraftswainEnvironment<ChildConfig = {}, ChildGlobal = {}> extends T
   async setup() {
     await super.setup();
 
-    // Eventually support JS
+    this.config = {...this.config, ...await loadConfig(
+      join(this.config.projectConfig.rootDir, "craftswain.config.yaml")
+    )};
 
-    this.config = {
-      ...this.config,
-      ...await loadConfig()
-    };
+    await Promise.all(this.config.modules.map(async module => {
+        const targetRequire = createRequire(this.config.projectConfig.rootDir);
 
-    const modules = await Promise.all(
-      this.config.modules.map(async module => {
-        var moduleType = await import(module);
-        return new moduleType(this.config, this.context);
+        const resolved = targetRequire.resolve(module);
+        const instance = targetRequire(resolved);
+
+        await instance.default(this);
       })
     );
-
-    this.modules.concat(modules);
 
     this.global.logger = Winston.createLogger({
       level: 'debug',
@@ -46,24 +45,14 @@ export class CraftswainEnvironment<ChildConfig = {}, ChildGlobal = {}> extends T
       ],
     });
 
-    this.global.logger?.log("debug", JSON.stringify(this.config, undefined, 2));
-
-    // Will trigger if docblock contains @my-custom-pragma my-pragma-value
-    /*if (this.docblockPragmas['my-custom-pragma'] === 'my-pragma-value') {
-      // ...
-    }*/
-
-    await Promise.all(
-      this.modules.map(module => module.setup())
-    );
+    Object.assign(this.global, CraftswainGlobal.testObjects);
   }
 
   async teardown() {
     await Promise.all(
-      this.modules.map(module => module.teardown())
+      CraftswainGlobal.cleanupHandles.map(x => x())
     );
 
-    this.global.logger?.close();
     await super.teardown();
   }
 
@@ -77,3 +66,4 @@ export class CraftswainEnvironment<ChildConfig = {}, ChildGlobal = {}> extends T
     }
   }
 }
+

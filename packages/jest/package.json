@@ -1,7 +1,8 @@
 {
-  "name": "@craftswain/selenium",
+  "name": "@craftswain/jest",
+  "description": "An environment manager for Jest to help develop integration tests.",
+  "packageManager": "yarn@3.4.1",
   "version": "0.0.3",
-  "description": "Easy way to expose selenium to Jest.",
   "scripts": {
     "build": "tsc",
     "test": "jest",
@@ -13,14 +14,14 @@
   "license": "MIT",
   "dependencies": {
     "@craftswain/core": "*",
-    "@craftswain/jest": "*",
     "@jest/environment": "^29.4.3",
-    "selenium-webdriver": "^4.8.1",
+    "jest-environment-node": "^29.4.3",
+    "js-yaml": "^4.1.0",
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "@types/node": "^18.14.2",
-    "@types/selenium-webdriver": "^4.1.12",
+    "@jest/types": "^29.4.3",
+    "@types/js-yaml": "^4.0.5",
     "shx": "^0.3.4",
     "typescript": "^4.9.5"
   }

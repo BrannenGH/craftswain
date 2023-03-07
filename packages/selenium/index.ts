@@ -1,8 +1,8 @@
-import { SeleniumEnvironment } from "./selenium-environment";
+import { CraftswainSelenium } from "./craftswain-selenium";
 import { PageModel } from "./page-model";
 
 export {
     PageModel
 }
 
-export default SeleniumEnvironment;
+export default CraftswainSelenium;
