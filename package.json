@@ -1,13 +1,22 @@
 {
   "name": "root",
   "packageManager": "yarn@3.4.1",
-  "private": true,
+  "scripts": {
+    "build": "tsc -p e2e/",
+    "pretest": "tsc -p e2e/",
+    "run": "jest -c e2e/out/jest.config.js",
+    "test": "jest -c e2e/out/jest.config.js"
+  },
   "workspaces": [
     "craftswain",
     "craftswain-selenium",
     "e2e"
   ],
+  "dependencies": {
+    "jest": "^29.4.3"
+  },
   "devDependencies": {
     "typescript": "^4.9.5"
-  }
+  },
+  "private": true
 }
