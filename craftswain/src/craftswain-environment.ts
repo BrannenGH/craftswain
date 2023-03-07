@@ -2,10 +2,7 @@ import TestEnvironment from 'jest-environment-node';
 import Winston from 'winston';
 import { CraftswainGlobal } from './global/craftswain-global';
 import { EnvironmentContext, JestEnvironmentConfig } from '@jest/environment';
-import { readFile } from "fs/promises";
-import { load as parseYaml } from "js-yaml";
 import { CraftswainConfig } from "./config/craftswain-config";
-import { join } from "node:path";
 import { loadConfig } from './index';
 
 export class CraftswainEnvironment<ChildConfig = {}, ChildGlobal = {}> extends TestEnvironment {
@@ -13,6 +10,7 @@ export class CraftswainEnvironment<ChildConfig = {}, ChildGlobal = {}> extends T
   config: ChildConfig & CraftswainConfig;
   testPath: any;
   docblockPragmas: any;
+  modules: TestEnvironment[] = [];
 
   constructor(config: JestEnvironmentConfig, context: EnvironmentContext) {
     super(config, context);
@@ -31,6 +29,15 @@ export class CraftswainEnvironment<ChildConfig = {}, ChildGlobal = {}> extends T
       ...await loadConfig()
     };
 
+    const modules = await Promise.all(
+      this.config.modules.map(async module => {
+        var moduleType = await import(module);
+        return new moduleType(this.config, this.context);
+      })
+    );
+
+    this.modules.concat(modules);
+
     this.global.logger = Winston.createLogger({
       level: 'debug',
       format: Winston.format.simple(),
@@ -45,9 +52,17 @@ export class CraftswainEnvironment<ChildConfig = {}, ChildGlobal = {}> extends T
     /*if (this.docblockPragmas['my-custom-pragma'] === 'my-pragma-value') {
       // ...
     }*/
+
+    await Promise.all(
+      this.modules.map(module => module.setup())
+    );
   }
 
   async teardown() {
+    await Promise.all(
+      this.modules.map(module => module.teardown())
+    );
+
     this.global.logger?.close();
     await super.teardown();
   }

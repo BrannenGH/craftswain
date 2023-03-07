@@ -1,3 +1,6 @@
+modules:
+  - "craftswain-selenium"
+
 selenium:
   webdrivers:
     - uri: "http://the-internet.herokuapp.com/"
