@@ -1,5 +1,5 @@
 import { WebDriver } from 'selenium-webdriver';
-import CraftswainEnvironment from 'craftswain';
+import CraftswainEnvironment from '@craftswain/core';
 import { buildWebdriver } from './factories/webdriver-factory';
 import { EnvironmentContext, JestEnvironmentConfig } from '@jest/environment';
 import { SeleniumConfig } from './config/selenium-config';

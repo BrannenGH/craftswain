@@ -1,8 +1,12 @@
 {
-  "name": "craftswain",
+  "name": "@craftswain/core",
   "description": "An environment manager for Jest to help develop integration tests.",
   "packageManager": "yarn@3.4.1",
   "version": "0.0.3",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
   "main": "out/index.js",
   "types": "out/index.d.ts",
   "author": "Brannen Hall",

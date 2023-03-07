@@ -1,6 +1,6 @@
 import { By, WebDriver} from 'selenium-webdriver';
 import { Logger } from 'winston';
-import { PageModel } from 'craftswain-selenium';
+import { PageModel } from '@craftswain/selenium';
 
 export class Homepage extends PageModel {
     constructor(

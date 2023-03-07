@@ -13,8 +13,8 @@
   "author": "Brannen Hall",
   "license": "MIT",
   "dependencies": {
-    "craftswain": "*",
-    "craftswain-selenium": "*",
+    "@craftswain/core": "*",
+    "@craftswain/selenium": "*",
     "jest": "^29.4.3",
     "jest-environment-node": "^29.4.3",
     "selenium-webdriver": "^4.8.1",
