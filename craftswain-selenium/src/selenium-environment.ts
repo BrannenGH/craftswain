@@ -1,30 +1,44 @@
-import { Builder, Browser, WebDriver, Capabilities } from 'selenium-webdriver';
-import { FileDetector } from 'selenium-webdriver/remote';
+import { WebDriver } from 'selenium-webdriver';
 import CraftswainEnvironment from 'craftswain';
-import { webDriverOverrides } from './overrides/web-driver';
+import { buildWebdriver } from './factories/webdriver-factory';
+import { EnvironmentContext, JestEnvironmentConfig } from '@jest/environment';
+import { SeleniumConfig } from './config/selenium-config';
 
-// my-custom-environment
-
-export type SeleniumEnvironmentConfig = {webDriver: WebDriver};
-
-export class SeleniumEnvironment extends CraftswainEnvironment<SeleniumEnvironmentConfig> {
-  constructor(config: any, context: any) {
+export class SeleniumEnvironment<ExtendedConfig = {}> extends CraftswainEnvironment<{selenium: SeleniumConfig} & ExtendedConfig> {
+  constructor(config: JestEnvironmentConfig, context: EnvironmentContext) {
     super(config, context);
   }
 
   async setup() {
     await super.setup();
     this.global.logger?.log("info", "starting webdriver");
-    const driver = (await new Builder()
-      .usingServer("http://selenium:4444/")
-      .withCapabilities(Capabilities.chrome)
-      .forBrowser(Browser.CHROME)
-      .build());
-    driver.setFileDetector(new FileDetector);  
 
-    const driverProxy = new Proxy(driver, webDriverOverrides(this.global.logger));
-    this.global.webDriver = driverProxy;
-    await driver.get('http://the-internet.herokuapp.com/');
+    var values = await Promise.all(this.config.selenium.webdrivers.map(async x => {
+      const driver = await buildWebdriver(
+          x,
+          this.global.logger
+      );
+
+      if (!driver) {
+        throw new Error("Could not create webdriver.");
+      }
+      
+      const uri = x.uri ?? "https://google.com";
+      this.global.logger?.log("info", `Going to URI ${uri}`);
+      await driver?.get(uri);
+      this.global.logger?.log("info", `Went to URI ${uri}`);
+
+      return {name: x.name ?? "webDriver", driver: driver};
+    }));
+
+    this.global.logger?.log("info", values);
+
+    values.forEach(value => {
+      if (!!value && !this.global[value?.name]) {
+        this.global.logger?.log("info", `Creating driver for ${value.name}`);
+        this.global[value.name] = value.driver;
+      }
+    });
 
     // Will trigger if docblock contains @my-custom-pragma my-pragma-value
     /*if (this.docblockPragmas['my-custom-pragma'] === 'my-pragma-value') {
@@ -33,7 +47,14 @@ export class SeleniumEnvironment extends CraftswainEnvironment<SeleniumEnvironme
   }
 
   async teardown() {
-    this.global.webDriver?.quit();
+    const webdrivers = this.config.selenium.webdrivers?.map(x => x.name ?? "webDriver");
+
+    webdrivers.forEach(async x => {
+      this.global.logger?.log("debug", "", this.global);
+      await (this.global[x] as WebDriver)?.quit();
+    });
+
+
     await super.teardown();
   }
 

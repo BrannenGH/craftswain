@@ -17,12 +17,12 @@
     "babel-jest": "^29.4.3",
     "craftswain": "*",
     "craftswain-selenium": "*",
+    "craftswain-test-framework": "*",
     "jest": "^29.4.3",
     "jest-environment-node": "^29.4.3",
     "selenium-webdriver": "^4.8.1",
     "ts-jest": "^29.0.5",
-    "ts-node": "^10.9.1",
-    "craftswain-test-framework": "./test/craftswain-test-framework"
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.4.3",

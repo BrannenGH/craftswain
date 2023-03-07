@@ -5,6 +5,7 @@
   "workspaces": [
     "craftswain",
     "craftswain-selenium",
+    "test/craftswain-test-framework",
     "test/craftswain-test-scripts"
   ],
   "devDependencies": {
