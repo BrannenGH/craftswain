@@ -5,8 +5,7 @@
   "workspaces": [
     "craftswain",
     "craftswain-selenium",
-    "test/craftswain-test-framework",
-    "test/craftswain-test-scripts"
+    "e2e"
   ],
   "devDependencies": {
     "typescript": "^4.9.5"

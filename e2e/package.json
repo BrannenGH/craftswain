@@ -5,24 +5,20 @@
   "description": "A sandbox to test various quality assurance automation solutions",
   "main": "index.js",
   "scripts": {
-    "run": "jest",
-    "test": "jest"
+    "build": "tsc",
+    "pretest": "tsc",
+    "run": "jest -c out/jest.config.js",
+    "test": "jest -c out/jest.config.js"
   },
   "author": "Brannen Hall",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.21.0",
-    "@babel/preset-env": "^7.20.2",
-    "@babel/preset-typescript": "^7.21.0",
-    "babel-jest": "^29.4.3",
     "craftswain": "*",
     "craftswain-selenium": "*",
-    "craftswain-test-framework": "*",
     "jest": "^29.4.3",
     "jest-environment-node": "^29.4.3",
     "selenium-webdriver": "^4.8.1",
-    "ts-jest": "^29.0.5",
-    "ts-node": "^10.9.1"
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@jest/globals": "^29.4.3",
