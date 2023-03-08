@@ -2,7 +2,7 @@
   "name": "@craftswain/core",
   "description": "An environment manager for Jest to help develop integration tests.",
   "packageManager": "yarn@3.4.1",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "scripts": {
     "build": "tsc",
     "test": "jest",

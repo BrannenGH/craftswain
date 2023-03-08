@@ -1,6 +1,6 @@
 {
   "name": "@craftswain/selenium",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Easy way to expose selenium to Jest.",
   "scripts": {
     "build": "tsc",
@@ -12,8 +12,8 @@
   "author": "Brannen Hall",
   "license": "MIT",
   "dependencies": {
-    "@craftswain/core": "*",
-    "@craftswain/jest": "*",
+    "@craftswain/core": "^0.1.0",
+    "@craftswain/jest": "^0.1.0",
     "@jest/environment": "^29.4.3",
     "selenium-webdriver": "^4.8.1",
     "winston": "^3.8.2"

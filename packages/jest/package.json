@@ -2,7 +2,7 @@
   "name": "@craftswain/jest",
   "description": "An environment manager for Jest to help develop integration tests.",
   "packageManager": "yarn@3.4.1",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "scripts": {
     "build": "tsc",
     "test": "jest",
@@ -13,7 +13,7 @@
   "author": "Brannen Hall",
   "license": "MIT",
   "dependencies": {
-    "@craftswain/core": "*",
+    "@craftswain/core": "^0.1.0",
     "@jest/environment": "^29.4.3",
     "jest-environment-node": "^29.4.3",
     "js-yaml": "^4.1.0",
