@@ -7,7 +7,9 @@
     "pretest": "lerna run build",
     "test": "lerna run test",
     "start": "lerna run start --scope=craftswain-test-scripts",
-    "clean": "lerna run clean"
+    "clean": "lerna run clean",
+    "version": "lerna version --no-private",
+    "publish": "lerna publish --no-private"
   },
   "workspaces": [
     "packages/*",
