@@ -1,5 +1,6 @@
 modules:
   - "@craftswain/selenium"
+  - "@craftswain/docker"
 
 selenium:
   webdrivers:
@@ -9,3 +10,5 @@ selenium:
     #- uri: "http://the-internet.herokuapp.com/"
     #  remote:
     #      uri: "http://selenium:4444/"
+
+docker:

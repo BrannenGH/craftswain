@@ -1,4 +1,4 @@
-import CraftswainEnvironment from "@craftswain/core";
+import CraftswainEnvironment from "../index";
 
 export const useRegister = <T>(
   registerHandle: () => { [key: string]: Promise<T> }

@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig-common.json",
-  "exclude": ["out/"],
+  "exclude": ["./out/"],
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "./out/",
