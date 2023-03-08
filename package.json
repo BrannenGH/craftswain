@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "lerna": "^6.5.1",
+    "prettier": "2.8.4",
     "shx": "^0.3.4",
     "typescript": "^4.9.5"
   },
