@@ -9,32 +9,28 @@
     {
       "label": "Build Craftswain",
       "type": "shell",
-      "problemMatcher": [
-        "$tsc"
-      ],
+      "problemMatcher": ["$tsc"],
       "command": "yarn tsc",
       "options": {
         "cwd": "craftswain"
       },
       "group": {
-        "kind": "build",
+        "kind": "build"
       },
-      "dependsOn": [ "Restore" ]
+      "dependsOn": ["Restore"]
     },
     {
       "label": "Build Craftswain Selenium",
       "type": "shell",
-      "problemMatcher": [
-        "$tsc"
-      ],
+      "problemMatcher": ["$tsc"],
       "command": "yarn tsc",
       "options": {
         "cwd": "craftswain-selenium"
       },
       "group": {
-        "kind": "build",
+        "kind": "build"
       },
-      "dependsOn": [ "Restore" ]
+      "dependsOn": ["Restore"]
     },
     {
       "label": "Demo Test Suite",
@@ -46,7 +42,7 @@
         "kind": "test",
         "isDefault": true
       },
-      "dependsOn": [ "Build Craftswain", "Build Craftswain Selenium"]
-    },
+      "dependsOn": ["Build Craftswain", "Build Craftswain Selenium"]
+    }
   ]
 }

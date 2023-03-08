@@ -1,22 +1,22 @@
 {
-	"name": "Node.js",
-	"image": "mcr.microsoft.com/devcontainers/javascript-node:18",
-    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-	"customizations": {
-		"vscode": {
-			"settings": {},
-			"extensions": [
-				"streetsidesoftware.code-spell-checker",
-                "arcanis.vscode-zipfs",
-                "Orta.vscode-jest"
-			]
-		}
-	},
-	"portsAttributes": {
-		"9000": {
-			"label": "Hello Remote World",
-			"onAutoForward": "notify"
-		}
-	},
-	"postCreateCommand": "yarn install && yarn build"
+  "name": "Node.js",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "streetsidesoftware.code-spell-checker",
+        "arcanis.vscode-zipfs",
+        "Orta.vscode-jest"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "9000": {
+      "label": "Hello Remote World",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "yarn install && yarn build"
 }

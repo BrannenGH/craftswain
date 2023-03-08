@@ -5,7 +5,7 @@ selenium:
   webdrivers:
     - uri: "http://the-internet.herokuapp.com/"
       local:
-          webdriverPath: "/Users/brann/Source/repos/craftswain/chromedriver"
+        webdriverPath: "/Users/brann/Source/repos/craftswain/chromedriver"
     #- uri: "http://the-internet.herokuapp.com/"
     #  remote:
     #      uri: "http://selenium:4444/"

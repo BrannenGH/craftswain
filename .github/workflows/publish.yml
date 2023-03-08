@@ -1,4 +1,4 @@
-name: Publish Package 
+name: Publish Package
 run-name: Build
 on:
   release:
@@ -24,4 +24,3 @@ jobs:
         uses: borales/actions-yarn@v4
         with:
           cmd: run publish
-

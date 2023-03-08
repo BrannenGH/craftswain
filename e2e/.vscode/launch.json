@@ -1,15 +1,15 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "Run tests",
-        "type": "node",
-        "request": "launch",
-        "env": { "CI": "true" },
-        "runtimeExecutable": "jest",
-        "cwd": "${workspaceRoot}",
-        "console": "integratedTerminal",
-        "internalConsoleOptions": "openOnSessionStart"
-      }
-   ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run tests",
+      "type": "node",
+      "request": "launch",
+      "env": { "CI": "true" },
+      "runtimeExecutable": "jest",
+      "cwd": "${workspaceRoot}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "openOnSessionStart"
+    }
+  ]
 }
