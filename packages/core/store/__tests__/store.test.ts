@@ -1,14 +1,14 @@
 import { useTestStore } from "../use-store";
 
 test("Able to use store", () => {
-  let [getTestObject, setTestObject] = useTestStore();
+  const [getTestObject, setTestObject] = useTestStore();
 
   expect(setTestObject).toBeTruthy();
   expect(getTestObject).toBeTruthy();
 });
 
 test("Registered test object is avaliable", async () => {
-  let [getTestObject, setTestObject] = useTestStore();
+  const [getTestObject, setTestObject] = useTestStore();
 
   const testObj = {};
 

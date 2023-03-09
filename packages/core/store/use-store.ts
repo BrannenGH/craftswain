@@ -14,7 +14,7 @@ type TestObjects<T> = { [key: string]: PromiseLike<T> };
  * @param registerHandle Registers an object to be used in the test environment.
  * @param cleanupHandle Registers a method to cleanup the object.
  */
-type SetTestObject<T> = (
+type SetTestObject = <T>(
   registerHandle: TestObjects<T>,
   cleanupHandle?: CleanupHandle<T>
 ) => void;
@@ -25,7 +25,7 @@ type SetTestObject<T> = (
  * @param name The name of the test object.
  * @returns A promise for the test object
  */
-type GetTestObject = (key: string) => PromiseLike<any>;
+type GetTestObject = <T>(key: string) => PromiseLike<T>;
 
 /**
  * Handle used to cleanup a test object.
@@ -39,6 +39,8 @@ const setTestObject =
   <T>(
     testObjects: TestObjects<T>,
     // use LazyPromise
+    // TODO: Implement cleanup
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     cleanupHandle?: CleanupHandle<T>
   ) => {
     debug("Registering test objects %j", testObjects);
@@ -46,12 +48,14 @@ const setTestObject =
     Object.assign(store.testObjects, testObjects);
   };
 
-const getTestObject = (store: TestStore) => (name: string) =>
-  store.testObjects[name];
+const getTestObject =
+  <T>(store: TestStore) =>
+  (name: string) =>
+    store.testObjects[name] as PromiseLike<T>;
 
 export const useTestStore: () => [
   get: GetTestObject,
-  set: SetTestObject<any>
+  set: SetTestObject
 ] = () => {
   const store = new TestStore();
 
