@@ -1,7 +1,7 @@
 /**
  * @jest-environment @craftswain/core
  */
-import { afterEach, beforeEach, describe, expect, test } from "@jest/globals";
+import { expect, test } from "@jest/globals";
 import { Homepage } from "../page_models/homepage";
 import type Docker from "dockerode";
 
@@ -9,13 +9,28 @@ declare const global: {
   docker: Promise<Docker>;
 };
 
-test("Open browser and go to webpage", async () => {
-  console.log("Start");
+test("Launch Docker Container", async () => {
   const docker = await global.docker;
 
-  console.log(await docker.listImages());
+  const running = await docker.listContainers();
+  await Promise.all(
+    running.map(async (container) => {
+      if (
+        container.Image == "selenium/standalone-chrome:110.0" &&
+        container.State == "running"
+      ) {
+        const contInstance = docker.getContainer(container.Id);
 
-  var response = await docker.pull("selenium/standalone-chrome:110.0");
+        if (container.State == "running") {
+          const stopStream = await contInstance.stop();
+        }
+
+        const removeStream = await contInstance.remove();
+      }
+    })
+  );
+
+  const response = await docker.pull("selenium/standalone-chrome:110.0");
 
   await new Promise((resolve, reject) => {
     docker.modem.followProgress(response, (err: any, res: any) =>
@@ -37,8 +52,10 @@ test("Open browser and go to webpage", async () => {
     },
   });
 
-  container.start();
+  await container.start();
+}, 604800000);
 
+test.only("Open browser and go to webpage", async () => {
   const homepage = new Homepage();
 
   expect(await (await homepage.lnkAbTesting).isDisplayed()).toBe(true);

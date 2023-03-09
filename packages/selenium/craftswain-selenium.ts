@@ -14,7 +14,7 @@ export const CraftswainSelenium = (
     useRegister<WebDriver>(() => {
       const res = {} as { [key: string]: Promise<WebDriver> };
 
-      res[x.name ?? "webDriver"] = new LazyPromise(async () => {
+      res[x.name ?? "webDriver"] = (async () => {
         const driver = await buildWebdriver(
           x,
           environment.global?.logger as any
@@ -32,7 +32,7 @@ export const CraftswainSelenium = (
         useCleanup(() => driver.quit());
 
         return driver;
-      });
+      })();
 
       return res;
     });
