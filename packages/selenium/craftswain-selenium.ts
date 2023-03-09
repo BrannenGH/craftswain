@@ -1,9 +1,9 @@
 import { WebDriver } from "selenium-webdriver";
 import CraftswainEnvironment from "@craftswain/jest";
 import { buildWebdriver } from "./factories/webdriver-factory";
-import { EnvironmentContext, JestEnvironmentConfig } from "@jest/environment";
 import { SeleniumConfig } from "./config/selenium-config";
 import { useRegister, useCleanup } from "@craftswain/core";
+import LazyPromise from "lazy-promise";
 
 export const CraftswainSelenium = (
   environment: CraftswainEnvironment<{ selenium: SeleniumConfig }>
@@ -14,7 +14,7 @@ export const CraftswainSelenium = (
     useRegister<WebDriver>(() => {
       const res = {} as { [key: string]: Promise<WebDriver> };
 
-      res[x.name ?? "webDriver"] = (async () => {
+      res[x.name ?? "webDriver"] = new LazyPromise(async () => {
         const driver = await buildWebdriver(
           x,
           environment.global?.logger as any
@@ -32,7 +32,7 @@ export const CraftswainSelenium = (
         useCleanup(() => driver.quit());
 
         return driver;
-      })();
+      });
 
       return res;
     });

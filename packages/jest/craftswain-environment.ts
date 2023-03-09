@@ -33,16 +33,14 @@ export class CraftswainEnvironment<
       )),
     };
 
-    await Promise.all(
-      this.config.modules.map(async (module) => {
-        const targetRequire = createRequire(this.config.projectConfig.rootDir);
+    this.config.modules.forEach((module) => {
+      const targetRequire = createRequire(this.config.projectConfig.rootDir);
 
-        const resolved = targetRequire.resolve(module);
-        const instance = targetRequire(resolved);
+      const resolved = targetRequire.resolve(module);
+      const instance = targetRequire(resolved);
 
-        await instance.default(this);
-      })
-    );
+      instance.default(this);
+    });
 
     this.global.logger = Winston.createLogger({
       level: "debug",
