@@ -13,10 +13,11 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Run lint
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: run lint
+      # Need to figure out eslint and yarn
+      #- name: Run lint
+      #  uses: borales/actions-yarn@v4
+      #  with:
+      #    cmd: run lint
 
       - name: Run install
         uses: borales/actions-yarn@v4
