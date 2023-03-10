@@ -4,7 +4,7 @@
   "description": "Easy way to expose selenium to Jest.",
   "scripts": {
     "build": "tsc",
-    "test": "jest",
+    "test": "jest -c out/jest.config.js",
     "clean": "shx rm -rf out/ > /dev/null",
     "lint": "npx eslint ."
   },

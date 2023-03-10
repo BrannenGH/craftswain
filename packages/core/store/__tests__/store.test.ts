@@ -1,4 +1,5 @@
 import { useStore } from "../use-store";
+import { expect, test } from "@jest/globals";
 
 test("Able to use store", () => {
   const testStore = useStore();
@@ -7,7 +8,7 @@ test("Able to use store", () => {
   expect(testStore.set).toBeTruthy();
 });
 
-test("Registered test object is avaliable", async () => {
+test("Registered test object is available", async () => {
   const testStore = useStore();
 
   const testObj = {};
@@ -32,6 +33,8 @@ test("All registered objects are returned", async () => {
 
   expect(all).toContain("test1");
   expect(all).toContain("test2");
+  const test = testStore.get("test1");
+
   expect(await testStore.get("test1")).toBe(testObj);
   expect(await testStore.get("test2")).toBe(testObj2);
 });

@@ -1,7 +1,6 @@
 import TestEnvironment from "jest-environment-node";
 import Winston from "winston";
 import { EnvironmentContext, JestEnvironmentConfig } from "@jest/environment";
-import { CraftswainConfig } from "./config/craftswain-config";
 import { loadConfig, Store, useStore } from "@craftswain/core";
 import { join } from "node:path";
 import { createRequire } from "module";
