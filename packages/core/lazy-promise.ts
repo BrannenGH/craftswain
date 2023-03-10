@@ -13,7 +13,7 @@ export class LazyPromise<T> implements PromiseLike<T> {
       | null
       | undefined,
     onrejected?:
-      | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+      | ((reason: unknown) => TResult2 | PromiseLike<TResult2>)
       | null
       | undefined
   ): PromiseLike<TResult1 | TResult2> {

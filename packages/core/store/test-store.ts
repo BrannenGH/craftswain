@@ -42,5 +42,6 @@ export type TestObjects<T> = { [key: string]: TestObject<T> };
 
 export class TestStore {
   cleanupHandles: (() => PromiseLike<void>)[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   testObjects: TestObjects<any> = {};
 }

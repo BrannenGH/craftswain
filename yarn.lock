@@ -456,6 +456,8 @@ __metadata:
     "@jest/types": ^29.4.3
     "@types/debug": ^4.1.7
     "@types/js-yaml": ^4.0.5
+    "@typescript-eslint/eslint-plugin": ^5.54.1
+    "@typescript-eslint/parser": ^5.54.1
     debug: ^4.3.4
     eslint: ^8.35.0
     jest-environment-node: ^29.4.3
@@ -476,6 +478,8 @@ __metadata:
     "@types/debug": ^4.1.7
     "@types/node": ^18.14.2
     "@types/selenium-webdriver": ^4.1.12
+    "@typescript-eslint/eslint-plugin": ^5.54.1
+    "@typescript-eslint/parser": ^5.54.1
     debug: ^4.3.4
     eslint: ^8.35.0
     selenium-webdriver: ^4.8.1

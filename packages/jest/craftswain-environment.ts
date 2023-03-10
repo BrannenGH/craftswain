@@ -10,15 +10,11 @@ import { Global } from "@jest/types";
 export class CraftswainEnvironment extends TestEnvironment {
   declare global: Global.Global;
   config: CraftswainConfig;
-  testPath: any;
-  docblockPragmas: any;
   private testStore?: Store;
 
   constructor(config: JestEnvironmentConfig, context: EnvironmentContext) {
     super(config, context);
     this.config = config as CraftswainConfig;
-    this.testPath = context.testPath;
-    this.docblockPragmas = context.docblockPragmas;
   }
 
   async setup() {
@@ -68,9 +64,7 @@ export class CraftswainEnvironment extends TestEnvironment {
     return super.getVmContext();
   }
 
-  async handleTestEvent(event: any, state: any) {
-    if (event.name === "test_start") {
-      // ...
-    }
+  async handleTestEvent(/*event: unknown, state: unknown*/) {
+    return;
   }
 }

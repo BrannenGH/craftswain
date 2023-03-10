@@ -1,4 +1,4 @@
-import { Builder, Browser, WebDriver, Capabilities } from "selenium-webdriver";
+import { Builder, Browser, Capabilities } from "selenium-webdriver";
 import { FileDetector } from "selenium-webdriver/remote";
 import { ServiceBuilder } from "selenium-webdriver/chrome";
 import { Logger } from "winston";

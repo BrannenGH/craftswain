@@ -10,5 +10,9 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "eslint.packageManager": "yarn",
   "eslint.nodePath": ".yarn/sdks",
-  "eslint.workingDirectories": ["./packages/core"]
+  "eslint.workingDirectories": [
+    "./packages/core",
+    "./packages/jest",
+    "./packages/selenium"
+  ]
 }
