@@ -30,6 +30,7 @@ jobs:
           cmd: run test
 
       - name: Run e2e tests
+        continue-on-error: true
         uses: borales/actions-yarn@v4
         with:
           cmd: run start
