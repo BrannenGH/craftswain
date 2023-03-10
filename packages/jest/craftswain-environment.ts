@@ -8,12 +8,12 @@ import { Global } from "@jest/types";
 
 export class CraftswainEnvironment extends TestEnvironment {
   declare global: Global.Global;
-  config: CraftswainConfig;
+  jestConfig: JestEnvironmentConfig;
   private testStore?: Store;
 
   constructor(config: JestEnvironmentConfig, context: EnvironmentContext) {
     super(config, context);
-    this.config = config as CraftswainConfig;
+    this.jestConfig = config;
   }
 
   async setup() {
@@ -24,11 +24,13 @@ export class CraftswainEnvironment extends TestEnvironment {
     this.global.testStore = testStore;
 
     const craftswainConfig = await loadConfig(
-      join(this.config.projectConfig.rootDir, "craftswain.config.yaml")
+      join(this.jestConfig.projectConfig.rootDir, "craftswain.config.yaml")
     );
 
     craftswainConfig.testObjects.forEach((config) => {
-      const targetRequire = createRequire(this.config.projectConfig.rootDir);
+      const targetRequire = createRequire(
+        this.jestConfig.projectConfig.rootDir
+      );
 
       const resolved = targetRequire.resolve(config.type);
       const instance = targetRequire(resolved);
