@@ -32,6 +32,6 @@ test("All registered objects are returned", async () => {
 
   expect(all).toContain("test1");
   expect(all).toContain("test2");
-  expect(testStore.get("test1")).toBe(testObj);
-  expect(testStore.get("test2")).toBe(testObj2);
+  expect(await testStore.get("test1")).toBe(testObj);
+  expect(await testStore.get("test2")).toBe(testObj2);
 });
