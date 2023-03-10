@@ -1,0 +1,8 @@
+{
+  "eslint.packageManager": "yarn",
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "npm.packageManager": "yarn"
+}

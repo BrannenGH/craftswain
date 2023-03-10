@@ -134,4 +134,6 @@ src/
 *.ts
 tsconfig.json
 
+__test__/
+
 .editorconfig

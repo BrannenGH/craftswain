@@ -1,33 +1,39 @@
 /**
  * @jest-environment @craftswain/core
  */
-import { expect, test } from "@jest/globals";
+import { afterEach, beforeEach, describe, expect, test } from "@jest/globals";
 import { Homepage } from "../page_models/homepage";
 import type Docker from "dockerode";
 
-declare const global: {
-  docker: Promise<Docker>;
-};
+declare const global: any;
 
-test("Launch Docker Container", async () => {
+test.only("Local browser: Open browser and go to webpage", async () => {
+  const homepage = new Homepage(global.localWebDriver);
+
+  expect(await (await homepage.lnkAbTesting).isDisplayed()).toBe(true);
+}, 604800000);
+
+test("Remote browser: Open browser and go to webpage", async () => {
   const docker = await global.docker;
 
   const running = await docker.listContainers();
   await Promise.all(
-    running.map(async (container) => {
-      if (
-        container.Image == "selenium/standalone-chrome:110.0" &&
-        container.State == "running"
-      ) {
-        const contInstance = docker.getContainer(container.Id);
+    running.map(
+      async (container: { Id: string; Image: string; State: string }) => {
+        if (
+          container.Image == "selenium/standalone-chrome:110.0" &&
+          container.State == "running"
+        ) {
+          const contInstance = docker.getContainer(container.Id);
 
-        if (container.State == "running") {
-          const stopStream = await contInstance.stop();
+          if (container.State == "running") {
+            const stopStream = await contInstance.stop();
+          }
+
+          const removeStream = await contInstance.remove();
         }
-
-        const removeStream = await contInstance.remove();
       }
-    })
+    )
   );
 
   const response = await docker.pull("selenium/standalone-chrome:110.0");
@@ -53,10 +59,8 @@ test("Launch Docker Container", async () => {
   });
 
   await container.start();
-}, 604800000);
 
-test.only("Open browser and go to webpage", async () => {
-  const homepage = new Homepage();
+  const homepage = new Homepage(global.remoteWebDriver);
 
   expect(await (await homepage.lnkAbTesting).isDisplayed()).toBe(true);
 }, 604800000);

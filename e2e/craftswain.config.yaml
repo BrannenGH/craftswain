@@ -1,14 +1,13 @@
-modules:
-  - "@craftswain/selenium"
-  - "@craftswain/docker"
-
-selenium:
-  webdrivers:
-    - uri: "http://the-internet.herokuapp.com/"
-      local:
-        webdriverPath: "/Users/brann/Source/repos/craftswain/chromedriver"
-    #- uri: "http://the-internet.herokuapp.com/"
-    #  remote:
-    #      uri: "http://selenium:4444/"
-
-docker:
+testObjects:
+  - name: "localWebDriver"
+    type: "@craftswain/selenium"
+    uri: "http://the-internet.herokuapp.com/"
+    local:
+      webdriverPath: "/Users/brann/Source/repos/craftswain/chromedriver"
+  - name: "remoteWebDriver"
+    type: "@craftswain/selenium"
+    uri: "http://the-internet.herokuapp.com/"
+    remote:
+      uri: "http://selenium:4444/"
+  - name: "docker"
+    type: "@craftswain/docker"
