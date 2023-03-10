@@ -1,6 +1,28 @@
-import { CraftswainSelenium } from "./craftswain-selenium";
 import { PageModel } from "./page-model";
+import { WebDriver } from "selenium-webdriver";
+import { buildWebdriver } from "./factories/webdriver-factory";
+import { LazyPromise } from "@craftswain/core";
+import type { Store, TestObjectConfig } from "@craftswain/core";
+import { WebDriverConfig } from "./config/selenium-config";
+import debug from "./debug";
 
 export { PageModel };
 
-export default CraftswainSelenium;
+export default (store: Store, config: TestObjectConfig & WebDriverConfig) => {
+  debug("Building webdriver %s with config: %j", config.name, config);
+  const driverPromise = new LazyPromise(async () => {
+    const driver = await buildWebdriver(config);
+
+    if (!driver) {
+      throw new Error("Could not create webdriver.");
+    }
+
+    const uri = config.uri ?? "https://google.com";
+    await driver?.get(uri);
+    return driver;
+  });
+
+  store.set<WebDriver>(config.name, driverPromise, async (driver) =>
+    driver.quit()
+  );
+};

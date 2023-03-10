@@ -454,7 +454,9 @@ __metadata:
     "@craftswain/core": ^0.1.0
     "@jest/environment": ^29.4.3
     "@jest/types": ^29.4.3
+    "@types/debug": ^4.1.7
     "@types/js-yaml": ^4.0.5
+    debug: ^4.3.4
     eslint: ^8.35.0
     jest-environment-node: ^29.4.3
     js-yaml: ^4.1.0
@@ -471,8 +473,10 @@ __metadata:
     "@craftswain/core": ^0.1.0
     "@craftswain/jest": ^0.1.0
     "@jest/environment": ^29.4.3
+    "@types/debug": ^4.1.7
     "@types/node": ^18.14.2
     "@types/selenium-webdriver": ^4.1.12
+    debug: ^4.3.4
     eslint: ^8.35.0
     selenium-webdriver: ^4.8.1
     shx: ^0.3.4

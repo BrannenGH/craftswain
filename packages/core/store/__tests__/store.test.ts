@@ -1,20 +1,37 @@
-import { useTestStore } from "../use-store";
+import { useStore } from "../use-store";
 
 test("Able to use store", () => {
-  const [getTestObject, setTestObject] = useTestStore();
+  const testStore = useStore();
 
-  expect(setTestObject).toBeTruthy();
-  expect(getTestObject).toBeTruthy();
+  expect(testStore.get).toBeTruthy();
+  expect(testStore.set).toBeTruthy();
 });
 
 test("Registered test object is avaliable", async () => {
-  const [getTestObject, setTestObject] = useTestStore();
+  const testStore = useStore();
 
   const testObj = {};
 
-  setTestObject({ test: Promise.resolve(testObj) });
+  testStore.set("test", Promise.resolve(testObj));
 
-  const test = await getTestObject("test");
+  const test = await testStore.get("test");
 
   expect(test).toBe(testObj);
+});
+
+test("All registered objects are returned", async () => {
+  const testStore = useStore();
+
+  const testObj = { abc: 123 };
+  const testObj2 = { 456: "xyz" };
+
+  testStore.set("test1", Promise.resolve(testObj));
+  testStore.set("test2", Promise.resolve(testObj2));
+
+  const all = testStore.allKeys();
+
+  expect(all).toContain("test1");
+  expect(all).toContain("test2");
+  expect(testStore.get("test1")).toBe(testObj);
+  expect(testStore.get("test2")).toBe(testObj2);
 });

@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc && shx cp craftswain.config.yaml out/",
     "start": "jest -c out/jest.config.js",
-    "test": "jest -c out/jest.config.js",
     "clean": "shx rm -rf out/ > /dev/null"
   },
   "author": "Brannen Hall",

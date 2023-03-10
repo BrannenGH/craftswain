@@ -1,63 +1,61 @@
 import debug from "../debug";
-import { TestStore } from "./test-store";
-
-/**
- * Handle used to register a test object.
- *
- * Each test object is assumed to have it's own unique key.
- */
-type TestObjects<T> = { [key: string]: PromiseLike<T> };
-
-/**
- * Registers an object to be used in the test environment.
- *
- * @param registerHandle Registers an object to be used in the test environment.
- * @param cleanupHandle Registers a method to cleanup the object.
- */
-type SetTestObject = <T>(
-  registerHandle: TestObjects<T>,
-  cleanupHandle?: CleanupHandle<T>
-) => void;
-
-/**
- * Grabs a reference to a test object with the following name.
- *
- * @param name The name of the test object.
- * @returns A promise for the test object
- */
-type GetTestObject = <T>(key: string) => PromiseLike<T>;
-
-/**
- * Handle used to cleanup a test object.
- *
- * @param testObj Test object to clean up.
- */
-type CleanupHandle<T> = (testObj: PromiseLike<T>) => PromiseLike<void>;
+import { TestObject, TestStore } from "./test-store";
+import type { CleanupTestObject } from "./test-store";
 
 const setTestObject =
   (store: TestStore) =>
   <T>(
-    testObjects: TestObjects<T>,
-    // use LazyPromise
-    // TODO: Implement cleanup
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    cleanupHandle?: CleanupHandle<T>
+    name: string,
+    testObject: PromiseLike<T>,
+    cleanupHandle?: (testObj: T) => PromiseLike<void>
   ) => {
-    debug("Registering test objects %j", testObjects);
-
-    Object.assign(store.testObjects, testObjects);
+    debug("Registering %s with value %j", name, testObject);
+    store.testObjects[name] = new TestObject<T>(testObject, cleanupHandle);
   };
 
 const getTestObject =
   <T>(store: TestStore) =>
   (name: string) =>
-    store.testObjects[name] as PromiseLike<T>;
+    store.testObjects[name].object as T;
 
-export const useTestStore: () => [
-  get: GetTestObject,
-  set: SetTestObject
-] = () => {
+const allKeys = (store: TestStore) => () => Object.keys(store.testObjects);
+
+const cleanupTestObject: (
+  store: TestStore
+) => (name: string) => Promise<void> = (store: TestStore) => (name: string) =>
+  store.testObjects[name].cleanup();
+
+export type Store = {
+  /**
+   * Grabs a reference to a test object with the following name.
+   *
+   * @param name The name of the test object.
+   * @returns A promise for the test object
+   */
+  get: <T>(key: string) => PromiseLike<T>;
+
+  /**
+   * Registers an object to be used in the test environment.
+   *
+   * @param registerHandle Registers an object to be used in the test environment.
+   * @param cleanupHandle Registers a method to cleanup the object.
+   */
+  set: <T>(
+    name: string,
+    testObject: PromiseLike<T>,
+    cleanupHandle?: CleanupTestObject<T>
+  ) => void;
+  cleanup: (name: string) => Promise<void>;
+  allKeys: () => string[];
+};
+
+export const useStore: () => Store = () => {
   const store = new TestStore();
 
-  return [getTestObject(store), setTestObject(store)];
+  return {
+    get: getTestObject(store),
+    set: setTestObject(store),
+    cleanup: cleanupTestObject(store),
+    allKeys: allKeys(store),
+  };
 };

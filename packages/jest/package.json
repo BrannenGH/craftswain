@@ -15,12 +15,14 @@
   "dependencies": {
     "@craftswain/core": "^0.1.0",
     "@jest/environment": "^29.4.3",
+    "debug": "^4.3.4",
     "jest-environment-node": "^29.4.3",
     "js-yaml": "^4.1.0",
     "winston": "^3.8.2"
   },
   "devDependencies": {
     "@jest/types": "^29.4.3",
+    "@types/debug": "^4.1.7",
     "@types/js-yaml": "^4.0.5",
     "eslint": "^8.35.0",
     "shx": "^0.3.4",
