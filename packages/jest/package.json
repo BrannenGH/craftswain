@@ -7,7 +7,7 @@
     "build": "tsc",
     "test": "jest",
     "clean": "shx rm -rf out/ > /dev/null",
-    "lint": "yarn eslint ."
+    "lint": "npx eslint ."
   },
   "main": "out/index.js",
   "types": "out/index.d.ts",
