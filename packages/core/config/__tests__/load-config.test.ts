@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { loadConfig } from "../load-config";
+import { loadYamlConfig } from "../load-config";
 import { expect, jest, test } from "@jest/globals";
 
 const exampleConfig = `testObjects:
@@ -15,7 +15,7 @@ test("YAML configuration loads correctly", async () => {
     .fn()
     .mockResolvedValue(Promise.resolve(exampleConfig) as never) as any;
 
-  const config = await loadConfig("/test");
+  const config = await loadYamlConfig("/test");
 
   expect(config).toBeDefined();
   expect(config.testObjects).toBeDefined();
