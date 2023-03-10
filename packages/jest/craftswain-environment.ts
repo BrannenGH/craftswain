@@ -1,8 +1,7 @@
 import TestEnvironment from "jest-environment-node";
 import Winston from "winston";
 import { EnvironmentContext, JestEnvironmentConfig } from "@jest/environment";
-import { loadConfig, Store, useStore } from "@craftswain/core";
-import { join } from "node:path";
+import { loadJSConfig, Store, useStore } from "@craftswain/core";
 import { createRequire } from "module";
 import { Global } from "@jest/types";
 
@@ -23,8 +22,8 @@ export class CraftswainEnvironment extends TestEnvironment {
     this.testStore = testStore;
     this.global.testStore = testStore;
 
-    const craftswainConfig = await loadConfig(
-      join(this.jestConfig.projectConfig.rootDir, "craftswain.config.yaml")
+    const craftswainConfig = await loadJSConfig(
+      this.jestConfig.projectConfig.rootDir
     );
 
     craftswainConfig.testObjects.forEach((config) => {
