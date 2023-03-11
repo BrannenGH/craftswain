@@ -2,9 +2,9 @@ import { Logger } from "winston";
 import { Locator, WebDriver } from "selenium-webdriver";
 import { webElementOverrides } from "./web-element";
 
-export const webDriverOverrides: (
+export const proxyWebDriver: <T extends WebDriver>(
   logger?: Logger
-) => ProxyHandler<WebDriver> = (logger?: Logger) => ({
+) => ProxyHandler<T> = (logger?: Logger) => ({
   get(target, p, reciever) {
     // If find element executed on target
     if (p === "findElement") {

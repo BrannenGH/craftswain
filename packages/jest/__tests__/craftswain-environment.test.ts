@@ -1,0 +1,3 @@
+test("Default", () => {
+  return;
+});

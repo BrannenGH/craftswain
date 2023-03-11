@@ -1,5 +1,5 @@
 import { Logger } from "winston";
-import { Locator, WebDriver, WebElement } from "selenium-webdriver";
+import { WebElement } from "selenium-webdriver";
 
 export const webElementOverrides: (
   logger?: Logger

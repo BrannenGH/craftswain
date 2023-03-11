@@ -17,3 +17,20 @@ jobs:
         uses: borales/actions-yarn@v4
         with:
           cmd: run build
+
+      - name: Run lint
+        continue-on-error: true
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: run lint
+
+      - name: Run tests
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: run test
+
+      - name: Run e2e tests
+        continue-on-error: true
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: run start
