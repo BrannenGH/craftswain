@@ -4,7 +4,7 @@ const config: CraftswainConfig = {
   testObjects: [],
 };
 
-if (true /*process.env.CI*/) {
+if (process.env.CI) {
   config.testObjects.push({
     name: "remoteWebDriver",
     type: "@craftswain/selenium",
