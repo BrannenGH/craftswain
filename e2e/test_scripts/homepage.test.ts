@@ -12,7 +12,7 @@ declare const global: any;
 test("Local browser: Open browser and go to webpage", async () => {
   const homepage = new Homepage(global.localWebDriver);
 
-  expect(await (await homepage.lnkAbTesting).isdisplayed()).tobe(true);
+  expect(await (await homepage.lnkAbTesting).isDisplayed()).toBe(true);
 }, 604800000);
 
 describe("Remote Selenium", () => {
