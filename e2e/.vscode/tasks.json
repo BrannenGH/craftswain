@@ -2,13 +2,23 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "jest",
-      "tsconfig": "tsconfig.json",
+      "label": "lint",
+      "type": "eslint",
+      "problemMatcher": ["$eslint-stylish"]
+    },
+    {
+      "label": "build",
+      "type": "npm",
+      "script": "build",
       "problemMatcher": ["$tsc"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
+      "dependsOn": ["lint"]
+    },
+    {
+      "label": "run e2e tests",
+      "type": "npm",
+      "script": "start",
+      "dependsOn": ["build"],
+      "problemMatcher": []
     }
   ]
 }

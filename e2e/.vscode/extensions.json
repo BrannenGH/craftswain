@@ -1,3 +1,7 @@
 {
-  "recommendations": ["arcanis.vscode-zipfs"]
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "arcanis.vscode-zipfs",
+    "Orta.vscode-jest"
+  ]
 }

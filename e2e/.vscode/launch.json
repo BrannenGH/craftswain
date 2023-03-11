@@ -1,15 +1,16 @@
 {
-  "version": "0.2.0",
+  "version": "1.0.0",
   "configurations": [
     {
-      "name": "Run tests",
       "type": "node",
       "request": "launch",
-      "env": { "CI": "true" },
-      "runtimeExecutable": "jest",
-      "cwd": "${workspaceRoot}",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "openOnSessionStart"
+      "name": "Jest: current file",
+      "env": { "DEBUG": "*" },
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["run", "--inspect-brk", "jest"],
+      "args": ["${fileBasenameNoExtension}", "--config", "out/jest.config.js"],
+      "console": "internalConsole",
+      "preLaunchTask": "build"
     }
   ]
 }

@@ -4,14 +4,19 @@ const config: CraftswainConfig = {
   testObjects: [],
 };
 
-if (process.env.CI) {
+if (true /*process.env.CI*/) {
   config.testObjects.push({
     name: "remoteWebDriver",
     type: "@craftswain/selenium",
     uri: "http://the-internet.herokuapp.com/",
     remote: {
-      uri: "http://selenium:4444/",
+      uri: "http://localhost:4444/",
     },
+  });
+
+  config.testObjects.push({
+    name: "docker",
+    type: "@craftswain/docker",
   });
 } else {
   config.testObjects.push({
