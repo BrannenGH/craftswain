@@ -1,11 +1,9 @@
-/**
- * @jest-environment @craftswain/core
- */
 import { afterEach, beforeEach, describe, expect, test } from "@jest/globals";
 import { Homepage } from "../page_models/homepage";
 import type Docker from "dockerode";
 import type { Container } from "dockerode";
 import { IncomingMessage } from "http";
+import debug from "debug";
 
 declare const global: any;
 
@@ -64,7 +62,9 @@ describe("Remote Selenium", () => {
           "4444/tcp": [{ HostPort: "4444" }],
           "7900/tcp": [{ HostPort: "7900" }],
         },
+        ShmSize: 2147483648,
       },
+      Env: ["SE_OPTS=--log-level FINE"],
       ExposedPorts: {
         "4444/tcp": {},
         "7900/tcp": {},
@@ -79,17 +79,47 @@ describe("Remote Selenium", () => {
     while (!(await container.inspect()).State.Running) {
       await snooze(500);
     }
+
+    const stream = await container.attach({
+      stream: true,
+      stdout: true,
+      stderr: true,
+    });
+
+    let ready = false;
+    container.modem.demuxStream(
+      stream,
+      {
+        write: (buff: Buffer) => {
+          const res = buff.toString("utf-8");
+          debug("DockerContainerOut:")(res);
+          if (res.includes("Started Selenium Standalone")) {
+            ready = true;
+          }
+        },
+      },
+      {
+        write: (buff: Buffer) =>
+          debug("DockerContainerErr:")(buff.toString("utf-8")),
+      }
+    );
+
+    while (!ready) {
+      await snooze(5000);
+    }
   }, 604800000);
 
   afterAll(async () => {
     await container?.stop();
 
     const stream = await container?.wait();
-    await new Promise((resolve, reject) => {
-      docker.modem.followProgress(stream, (err: any, res: any) =>
-        err ? reject(err) : resolve(res)
-      );
-    });
+    /*(await new Promise((resolve, reject) => {
+      if (Object.hasOwn(stream, "on")) {
+        docker.modem.followProgress(stream, (err: any, res: any) =>
+          err ? reject(err) : resolve(res)
+        );
+      }
+    });*/
   }, 604800000);
 
   test.only("Remote browser: Open browser and go to webpage", async () => {
