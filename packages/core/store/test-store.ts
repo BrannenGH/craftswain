@@ -1,4 +1,4 @@
-import { LazyPromise } from "../lazy-promise";
+import { LazyPromise } from "../index";
 
 export type CleanupTestObject<T> = (testObject: T) => PromiseLike<void>;
 

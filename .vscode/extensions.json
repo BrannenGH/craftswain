@@ -1,3 +1,10 @@
 {
-  "recommendations": ["arcanis.vscode-zipfs", "Orta.vscode-jest"]
+  "recommendations": [
+    "arcanis.vscode-zipfs",
+    "Orta.vscode-jest",
+    "ms-vscode-remote.remote-containers",
+    "dbaeumer.vscode-eslint",
+    "redhat.vscode-yaml",
+    "nrwl.angular-console"
+  ]
 }

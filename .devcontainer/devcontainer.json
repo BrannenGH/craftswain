@@ -6,9 +6,12 @@
     "vscode": {
       "settings": {},
       "extensions": [
-        "streetsidesoftware.code-spell-checker",
         "arcanis.vscode-zipfs",
-        "Orta.vscode-jest"
+        "Orta.vscode-jest",
+        "ms-vscode-remote.remote-containers",
+        "dbaeumer.vscode-eslint",
+        "redhat.vscode-yaml",
+        "nrwl.angular-console"
       ]
     }
   },

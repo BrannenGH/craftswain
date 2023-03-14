@@ -14,11 +14,10 @@
       "dependsOn": ["lint"]
     },
     {
-      "label": "run e2e tests",
+      "label": "test",
       "type": "npm",
-      "script": "start",
-      "dependsOn": ["build"],
-      "problemMatcher": []
+      "script": "test",
+      "dependsOn": ["build"]
     }
   ]
 }
