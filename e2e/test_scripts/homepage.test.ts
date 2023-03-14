@@ -4,6 +4,8 @@ import type Docker from "dockerode";
 import type { Container } from "dockerode";
 import { IncomingMessage } from "http";
 import debug from "debug";
+import { By, ThenableWebDriver, WebDriver } from "selenium-webdriver";
+import { initApi } from "@craftswain/docker";
 
 declare const global: any;
 
@@ -14,49 +16,24 @@ test("Local browser: Open browser and go to webpage", async () => {
 }, 604800000);
 
 describe("Remote Selenium", () => {
-  let docker: Docker;
+  let docker: any;
   let container: Container;
 
   beforeAll(async () => {
-    docker = await global.docker;
-    const running = await docker.listContainers();
-    await Promise.all(
-      running.map(
-        async (container: { Id: string; Image: string; State: string }) => {
-          if (container.Image == "selenium/standalone-chrome:110.0") {
-            const contInstance = docker.getContainer(container.Id);
+    let docker = initApi(await global.docker);
 
-            if (container.State == "running") {
-              await contInstance.stop();
-            }
+    const image = "selenium/standalone-chrome:110.0";
+    const name = "RemoteSelenium";
 
-            const stream = await contInstance.wait();
-            if (stream.on) {
-              await new Promise((resolve, reject) => {
-                docker.modem.followProgress(stream, (err: any, res: any) =>
-                  err ? reject(err) : resolve(res)
-                );
-              });
-            }
+    await docker.pullImage(image);
 
-            await contInstance.remove();
-          }
-        }
-      )
+    await docker.removeContainers((container) =>
+      container.Names.includes(name)
     );
 
-    const response: IncomingMessage = await docker.pull(
-      "selenium/standalone-chrome:110.0"
-    );
-
-    await new Promise((resolve, reject) => {
-      docker.modem.followProgress(response, (err: any, res: any) =>
-        err ? reject(err) : resolve(res)
-      );
-    });
-
-    container = await docker.createContainer({
+    const container = await docker.createContainer({
       Image: "selenium/standalone-chrome:110.0",
+      name: name,
       HostConfig: {
         PortBindings: {
           "4444/tcp": [{ HostPort: "4444" }],
@@ -64,7 +41,7 @@ describe("Remote Selenium", () => {
         },
         ShmSize: 2147483648,
       },
-      Env: ["SE_OPTS=--log-level FINE"],
+      //Env: ["SE_OPTS=--log-level FINE"],
       ExposedPorts: {
         "4444/tcp": {},
         "7900/tcp": {},
@@ -73,58 +50,30 @@ describe("Remote Selenium", () => {
 
     await container.start();
 
-    const snooze = (ms: number) =>
-      new Promise((resolve) => setTimeout(resolve, ms));
-
-    while (!(await container.inspect()).State.Running) {
-      await snooze(500);
-    }
-
-    const stream = await container.attach({
-      stream: true,
-      stdout: true,
-      stderr: true,
-    });
-
-    let ready = false;
-    container.modem.demuxStream(
-      stream,
-      {
-        write: (buff: Buffer) => {
-          const res = buff.toString("utf-8");
-          debug("DockerContainerOut:")(res);
-          if (res.includes("Started Selenium Standalone")) {
-            ready = true;
-          }
-        },
-      },
-      {
-        write: (buff: Buffer) =>
-          debug("DockerContainerErr:")(buff.toString("utf-8")),
-      }
+    await docker.streamContainer(
+      container,
+      debug(`Craftswain:Docker:${name}:Out`),
+      debug(`Craftswain:Docker:${name}:Error`)
     );
-
-    while (!ready) {
-      await snooze(5000);
-    }
   }, 604800000);
 
   afterAll(async () => {
     await container?.stop();
 
     const stream = await container?.wait();
-    /*(await new Promise((resolve, reject) => {
-      if (Object.hasOwn(stream, "on")) {
-        docker.modem.followProgress(stream, (err: any, res: any) =>
-          err ? reject(err) : resolve(res)
-        );
-      }
-    });*/
   }, 604800000);
 
   test.only("Remote browser: Open browser and go to webpage", async () => {
-    const homepage = new Homepage(global.remoteWebDriver);
+    const driver: WebDriver = await global.remoteWebDriver;
 
-    expect(await (await homepage.lnkAbTesting).isDisplayed()).toBe(true);
+    const t = driver.findElement(By.css("ul li:nth-of-type(1) a"));
+
+    const is = await t.isDisplayed();
+
+    expect(is).toBe(true);
+
+    /*const homepage = new Homepage();
+
+    expect(await (await homepage.lnkAbTesting).isDisplayed()).toBe(true);*/
   }, 604800000);
 });

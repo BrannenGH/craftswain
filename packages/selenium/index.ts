@@ -1,5 +1,5 @@
 import { PageModel } from "./page-model";
-import { WebDriver } from "selenium-webdriver";
+import { By, WebDriver } from "selenium-webdriver";
 import { buildWebdriver } from "./factories/webdriver-factory";
 import { LazyPromise, RetryPromise } from "@craftswain/core";
 import type { Store, TestObjectConfig } from "@craftswain/core";
@@ -14,7 +14,7 @@ export default (store: Store, config: TestObjectConfig & WebDriverConfig) => {
     () =>
       new RetryPromise(
         async () => {
-          const driver = await buildWebdriver(config);
+          const driver = buildWebdriver(config);
 
           if (!driver) {
             throw new Error("Could not create webdriver.");
@@ -22,6 +22,11 @@ export default (store: Store, config: TestObjectConfig & WebDriverConfig) => {
 
           const uri = config.uri ?? "https://google.com";
           await driver?.get(uri);
+          const t = await driver.findElement(By.css("ul li:nth-of-type(1) a"));
+
+          const is = await t.isDisplayed();
+
+          debug("T display status: %s", is);
 
           return driver;
         },
