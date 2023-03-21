@@ -3,6 +3,7 @@
   "exclude": ["out/"],
   "include": ["**/*.ts"],
   "compilerOptions": {
+    "module": "CommonJS",
     "rootDir": ".",
     "outDir": "./out/",
     "watch": false

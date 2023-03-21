@@ -1,10 +1,8 @@
-import { afterEach, beforeEach, describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import { Homepage } from "../page_models/homepage";
-import type Docker from "dockerode";
 import type { Container } from "dockerode";
-import { IncomingMessage } from "http";
 import debug from "debug";
-import { By, ThenableWebDriver, WebDriver } from "selenium-webdriver";
+import { By, WebDriver } from "selenium-webdriver";
 import { initApi } from "@craftswain/docker";
 
 declare const global: any;
@@ -16,19 +14,18 @@ test("Local browser: Open browser and go to webpage", async () => {
 }, 604800000);
 
 describe("Remote Selenium", () => {
-  let docker: any;
   let container: Container;
+  let docker: ReturnType<typeof initApi>;
 
   beforeAll(async () => {
-    let docker = initApi(await global.docker);
-
     const image = "selenium/standalone-chrome:110.0";
     const name = "RemoteSelenium";
+    docker = await global.docker;
 
     await docker.pullImage(image);
 
     await docker.removeContainers((container) =>
-      container.Names.includes(name)
+      container.Names.includes("/" + name)
     );
 
     const container = await docker.createContainer({
@@ -52,8 +49,8 @@ describe("Remote Selenium", () => {
 
     await docker.streamContainer(
       container,
-      debug(`Craftswain:Docker:${name}:Out`),
-      debug(`Craftswain:Docker:${name}:Error`)
+      debug(`craftswain:docker:${name}:Out`),
+      debug(`craftswain:docker:${name}:Error`)
     );
   }, 604800000);
 

@@ -1,21 +1,44 @@
 import type Docker from "dockerode";
+import internal from "stream";
+import debug from "../debug";
+
+export const waitForStream = async (
+  docker: Docker,
+  stream: internal.Stream | any
+) => {
+  debug("stream: %j", stream);
+  if (stream.on) {
+    await new Promise((resolve, reject) => {
+      docker.modem.followProgress(
+        stream,
+        (err: any, res: any) => (err ? reject(err) : resolve(res)),
+        (event: Buffer) => debug(event.toString("utf-8"))
+      );
+    });
+  }
+};
 
 export const initApi = (docker: Docker) => {
   const dockerApi = {
     pullImage: async (image: string) => {
+      debug(`Pulling image ${image}`);
       const stream = await docker.pull(image);
-      await dockerApi.waitForStream(stream);
+      await waitForStream(docker, stream);
     },
     createContainer: async (options: Docker.ContainerCreateOptions) =>
       await docker.createContainer(options),
     getContainers: async (
       filter: (container: Docker.ContainerInfo) => boolean
     ): Promise<Docker.ContainerInfo[]> => {
-      const containers = await docker.listContainers();
+      const containers = await docker.listContainers({ all: true });
+
+      debug("Found containers %j", containers);
 
       return containers.filter(filter);
     },
     removeContainer: async (container: Docker.ContainerInfo) => {
+      debug("Removing container $j", container);
+
       const containerInstance = docker.getContainer(container.Id);
 
       if (container.State == "running") {
@@ -37,16 +60,7 @@ export const initApi = (docker: Docker) => {
     waitForLastOperation: async (container: Docker.Container) => {
       const stream = await container.wait();
 
-      dockerApi.waitForStream(stream);
-    },
-    waitForStream: async (stream: any) => {
-      if (stream.on) {
-        await new Promise((resolve, reject) => {
-          docker.modem.followProgress(stream, (err: any, res: any) =>
-            err ? reject(err) : resolve(res)
-          );
-        });
-      }
+      waitForStream(docker, stream);
     },
     streamContainer: async (
       container: any,
@@ -72,6 +86,5 @@ export const initApi = (docker: Docker) => {
       );
     },
   };
-
   return dockerApi;
 };

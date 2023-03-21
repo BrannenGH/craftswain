@@ -1,13 +1,14 @@
 {
   "name": "Node.js",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  "dockerFile": "./suse-dev-environment/Dockerfile",
+  "capAdd": ["SYS_ADMIN"],
+  "securityOpt": ["seccomp=unconfined"],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "customizations": {
     "vscode": {
       "settings": {},
       "extensions": [
         "arcanis.vscode-zipfs",
-        "Orta.vscode-jest",
         "ms-vscode-remote.remote-containers",
         "dbaeumer.vscode-eslint",
         "redhat.vscode-yaml",
@@ -21,5 +22,5 @@
       "onAutoForward": "notify"
     }
   },
-  "postCreateCommand": "yarn install && yarn build"
+  "postCreateCommand": "/bin/sh ./.devcontainer/prep.sh && yarn install && yarn build"
 }

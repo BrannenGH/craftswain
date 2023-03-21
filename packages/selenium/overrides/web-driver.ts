@@ -1,6 +1,7 @@
 import { Locator, WebDriver, WebElementPromise } from "selenium-webdriver";
-import { ProxyBuilder, RetryPromise } from "@craftswain/core";
+import { ProxyBuilder, PRetry } from "@craftswain/core";
 import debug from "../debug";
+import delay from "delay";
 
 export const proxyWebDriver = (webDriver: WebDriver) =>
   new ProxyBuilder(webDriver)
@@ -18,4 +19,8 @@ export const proxyFindElement = (
 
 export const proxyWebElementPromise = (
   webElementPromise: () => WebElementPromise
-) => new RetryPromise(webElementPromise, 10, 8000);
+) =>
+  PRetry(webElementPromise, {
+    onFailedAttempt: () => delay(100),
+    retries: 5,
+  });
