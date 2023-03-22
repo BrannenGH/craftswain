@@ -6,21 +6,26 @@ import debug from "../debug";
 
 export const waitForStream = async (
   docker: Docker,
-  stream: internal.Stream | any
+  stream: internal.Stream | unknown
 ) => {
-  debug("stream: %j", stream);
-  if (stream.on) {
+  if ((stream as internal.Stream).on) {
     await new Promise((resolve, reject) => {
       docker.modem.followProgress(
-        stream,
-        (err: any, res: any) => (err ? reject(err) : resolve(res)),
+        stream as internal.Stream,
+        (err: unknown, res: unknown) => (err ? reject(err) : resolve(res)),
         (event: Buffer) => debug(event.toString("utf-8"))
       );
     });
   }
 };
 
-export const initApi = (docker: Docker) => {
+/**
+ * Wraps common docker functions into composite components,
+ * useful for spinning up dependencies for integration testing.
+ * @param docker The dockerode instance to wrap
+ * @returns An object containing functions to interact with docker.
+ */
+export const dockerApi = (docker: Docker) => {
   const dockerApi = {
     pullImage: async (image: string) => {
       debug(`Pulling image ${image}`);
@@ -42,7 +47,7 @@ export const initApi = (docker: Docker) => {
       return containers.filter(filter);
     },
     removeContainer: async (container: Docker.ContainerInfo) => {
-      debug("Removing container $j", container);
+      debug("Removing container %j", container);
 
       const containerInstance = docker.getContainer(container.Id);
 
@@ -68,7 +73,7 @@ export const initApi = (docker: Docker) => {
       waitForStream(docker, stream);
     },
     streamContainer: async (
-      container: any,
+      container: Docker.Container,
       onStdOut: (message: string) => void,
       onStdErr: (message: string) => void
     ) => {

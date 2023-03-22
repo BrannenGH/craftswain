@@ -1,15 +1,14 @@
 import { Store, PLazy } from "@craftswain/core";
 import Docker from "dockerode";
-import { initApi } from "./container/container-lifecycle";
-import os from "node:os";
+import { dockerApi } from "./container/container-lifecycle";
 
 export * from "./container/index";
-export default (store: Store, config: unknown) => {
+export default (store: Store/*TODO: , config: unknown*/) => {
   store.set(
     "docker",
     new PLazy(() =>
       Promise.resolve(
-        initApi(
+        dockerApi(
           new Docker()
         )
       )
