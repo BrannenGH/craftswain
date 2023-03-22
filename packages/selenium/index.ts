@@ -12,10 +12,11 @@ export { PageModel };
 export default (store: Store, config: TestObjectConfig & WebDriverConfig) => {
   debug("Building webdriver %s with config: %j", config.name, config);
   const driverPromise = new PLazy(() => {
-    const driver = buildWebdriver(config);
+    let driver;
 
     return PRetry(
       async () => {
+        driver = buildWebdriver(config);
         try {
           const uri = config.uri ?? "https://google.com";
           await driver?.get(uri);
@@ -35,7 +36,7 @@ export default (store: Store, config: TestObjectConfig & WebDriverConfig) => {
         return driver;
       },
       {
-        onFailedAttempt: () => delay(500),
+        onFailedAttempt: () => delay(2000),
         retries: 5,
       }
     );

@@ -10,9 +10,7 @@ export default (store: Store, config: unknown) => {
     new PLazy(() =>
       Promise.resolve(
         initApi(
-          new Docker({
-            socketPath: `/run/user/1000/podman/podman.sock`,
-          })
+          new Docker()
         )
       )
     )
