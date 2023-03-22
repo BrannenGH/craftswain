@@ -1,3 +1,5 @@
+import { PRetry } from "@craftswain/core";
+import delay from "delay";
 import type Docker from "dockerode";
 import internal from "stream";
 import debug from "../debug";
@@ -26,7 +28,10 @@ export const initApi = (docker: Docker) => {
       await waitForStream(docker, stream);
     },
     createContainer: async (options: Docker.ContainerCreateOptions) =>
-      await docker.createContainer(options),
+      PRetry(() => docker.createContainer(options), {
+          onFailedAttempt: () => delay(500),
+          retries: 5,
+      }),
     getContainers: async (
       filter: (container: Docker.ContainerInfo) => boolean
     ): Promise<Docker.ContainerInfo[]> => {

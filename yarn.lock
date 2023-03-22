@@ -458,6 +458,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.54.1
     "@typescript-eslint/parser": ^5.54.1
     debug: ^4.3.4
+    delay: ^5.0.0
     dockerode: ^3.3.4
     eslint: ^8.35.0
     jest: ^29.5.0
