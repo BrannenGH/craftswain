@@ -3,7 +3,7 @@ import { Homepage } from "../page_models/homepage";
 import type { Container } from "dockerode";
 import debug from "debug";
 import { By, WebDriver } from "selenium-webdriver";
-import { initApi } from "@craftswain/docker";
+import { dockerApi } from "@craftswain/docker";
 
 declare const global: any;
 
@@ -15,7 +15,7 @@ test("Local browser: Open browser and go to webpage", async () => {
 
 describe("Remote Selenium", () => {
   let container: Container;
-  let docker: ReturnType<typeof initApi>;
+  let docker: ReturnType<typeof dockerApi>;
 
   beforeAll(async () => {
     const image = "selenium/standalone-chrome:110.0";
