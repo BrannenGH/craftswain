@@ -47,7 +47,7 @@ const getDOMException = (errorMessage) =>
 export default async function pRetry(input, options) {
   return new Promise((resolve, reject) => {
     options = {
-      onFailedAttempt() {},
+      onFailedAttempt: undefined,
       retries: 10,
       ...options,
     };
@@ -87,7 +87,9 @@ export default async function pRetry(input, options) {
 
           try {
             debug("executing onFailed attempt");
-            await options.onFailedAttempt(error);
+            if (options.onFailedAttempt) {
+              await options.onFailedAttempt(error);
+            }
           } catch (error) {
             debug("onFailed threw error");
             reject(error);
