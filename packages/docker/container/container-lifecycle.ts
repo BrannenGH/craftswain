@@ -27,6 +27,7 @@ export const waitForStream = async (
  */
 export const dockerApi = (docker: Docker) => {
   const dockerApi = {
+    streams: [] as NodeJS.ReadWriteStream[],
     pullImage: async (image: string) => {
       debug(`Pulling image ${image}`);
       const stream = await docker.pull(image);
@@ -83,6 +84,8 @@ export const dockerApi = (docker: Docker) => {
         stderr: true,
       });
 
+      dockerApi.streams.push(stream);
+
       const encode = (buff: Buffer) => buff.toString("utf-8");
 
       container.modem.demuxStream(
@@ -95,6 +98,9 @@ export const dockerApi = (docker: Docker) => {
         }
       );
     },
+    cleanupStreams: async () => {
+      dockerApi.streams.forEach(x => x.removeAllListeners());
+    }
   };
   return dockerApi;
 };
