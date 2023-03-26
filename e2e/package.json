@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc && shx cp craftswain.config.yaml out/",
-    "start": "jest -c out/jest.config.js",
+    "start": "jest -c out/jest.config.js --runInBand --detectOpenHandles --forceExit",
     "clean": "shx rm -rf out/ > /dev/null"
   },
   "author": "Brannen Hall",
