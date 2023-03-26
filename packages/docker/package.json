@@ -1,7 +1,8 @@
 {
-  "name": "@craftswain/selenium",
+  "name": "@craftswain/docker",
+  "description": "A docker integration for craftswain",
+  "packageManager": "yarn@3.4.1",
   "version": "0.1.0",
-  "description": "Easy way to expose selenium to Jest.",
   "scripts": {
     "build": "tsc",
     "test": "jest -c out/jest.config.js",
@@ -14,19 +15,17 @@
   "license": "MIT",
   "dependencies": {
     "@craftswain/core": "^0.1.0",
-    "@craftswain/jest": "^0.1.0",
-    "@jest/environment": "^29.4.3",
     "debug": "^4.3.4",
     "delay": "^5.0.0",
-    "selenium-webdriver": "^4.8.1",
-    "winston": "^3.8.2"
+    "dockerode": "^3.3.4"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",
+    "@jest/types": "^29.4.3",
     "@types/debug": "^4.1.7",
-    "@types/jest": "^29.4.0",
-    "@types/node": "^18.14.2",
-    "@types/selenium-webdriver": "^4.1.12",
+    "@types/dockerode": "^3.3.14",
+    "@types/js-yaml": "^4.0.5",
+    "@types/node": "^18.14.6",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "eslint": "^8.35.0",

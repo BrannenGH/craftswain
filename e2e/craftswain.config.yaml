@@ -9,3 +9,5 @@ testObjects:
     uri: "http://the-internet.herokuapp.com/"
     remote:
       uri: "http://selenium:4444/"
+  - name: "docker"
+    type: "@craftswain/docker"

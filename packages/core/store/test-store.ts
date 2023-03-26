@@ -1,5 +1,3 @@
-import { LazyPromise } from "../lazy-promise";
-
 export type CleanupTestObject<T> = (testObject: T) => PromiseLike<void>;
 
 export class TestObject<T> {
@@ -24,7 +22,7 @@ export class TestObject<T> {
     // If hasn't executed, don't need cleanup
     if (
       "executed" in this.object &&
-      !(this.object as LazyPromise<T>).executed
+      !(this.object as { executed: boolean }).executed
     ) {
       needsCleanUp = false;
     }

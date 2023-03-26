@@ -55,7 +55,7 @@ export const buildWebdriver = (config: WebDriverConfig) => {
     throw new Error("Couldn't parse configuration");
   }
 
-  const driverProxy = new Proxy(driver, proxyWebDriver());
+  const driverProxy = driver;
 
   return driverProxy;
 };

@@ -1,12 +1,12 @@
 {
   "jest.autoRun": "off",
   "jest.jestCommandLine": "yarn jest",
-  "jest.rootPath": "test/craftswain-test-scripts",
+  "jest.rootPath": "e2e/out",
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true
   },
-  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "eslint.packageManager": "yarn",
   "eslint.nodePath": ".yarn/sdks",

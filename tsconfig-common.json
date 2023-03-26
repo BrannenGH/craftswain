@@ -1,9 +1,9 @@
 {
   "exclude": ["out", "node_modules"],
   "compilerOptions": {
-    "target": "esnext",
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "allowJs": true,
     "declaration": true,
     "declarationMap": true,

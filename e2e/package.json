@@ -6,15 +6,16 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc && shx cp craftswain.config.yaml out/",
-    "start": "jest -c out/jest.config.js",
+    "start": "jest -c out/jest.config.js --runInBand --detectOpenHandles --forceExit",
     "clean": "shx rm -rf out/ > /dev/null"
   },
   "author": "Brannen Hall",
   "license": "MIT",
   "dependencies": {
-    "@craftswain/core": "*",
-    "@craftswain/jest": "*",
-    "@craftswain/selenium": "*",
+    "@craftswain/core": "^0.1.0",
+    "@craftswain/docker": "^0.1.0",
+    "@craftswain/jest": "^0.1.0",
+    "@craftswain/selenium": "^0.1.0",
     "jest": "^29.4.3",
     "jest-environment-node": "^29.4.3",
     "selenium-webdriver": "^4.8.1",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.4.3",
+    "@types/dockerode": "^3.3.14",
     "@types/node": "^18.14.2",
     "@types/selenium-webdriver": "^4.1.12",
     "eslint": "^8.35.0",

@@ -1,23 +1,26 @@
-import { Logger } from "winston";
-import { Locator, WebDriver } from "selenium-webdriver";
-import { webElementOverrides } from "./web-element";
+import { Locator, WebDriver, WebElementPromise } from "selenium-webdriver";
+import { ProxyBuilder, PRetry } from "@craftswain/core";
+import debug from "../debug";
+import delay from "delay";
 
-export const proxyWebDriver: <T extends WebDriver>(
-  logger?: Logger
-) => ProxyHandler<T> = (logger?: Logger) => ({
-  get(target, p, reciever) {
+export const proxyWebDriver = (webDriver: WebDriver) =>
+  new ProxyBuilder(webDriver)
     // If find element executed on target
-    if (p === "findElement") {
-      // Setup a new proxy for findElement
-      return new Proxy(Reflect.get(target, p, reciever), {
-        apply: (target, caller, args) => {
-          return target
-            .apply(caller, args as [locator: Locator])
-            .then((element) => new Proxy(element, webElementOverrides(logger)));
-        },
-      });
-    }
+    .whenGetProperty("findElement", (target, receiver, resolve) => {
+      return proxyFindElement(
+        resolve() as InstanceType<typeof WebDriver>["findElement"]
+      );
+    })
+    .build();
 
-    return Reflect.get(target, p, reciever);
-  },
-});
+export const proxyFindElement = (
+  findElement: InstanceType<typeof WebDriver>["findElement"]
+) => new ProxyBuilder(findElement).wrapReturnLazy(proxyWebElementPromise);
+
+export const proxyWebElementPromise = (
+  webElementPromise: () => WebElementPromise
+) =>
+  PRetry(webElementPromise, {
+    onFailedAttempt: () => delay(100),
+    retries: 5,
+  });
