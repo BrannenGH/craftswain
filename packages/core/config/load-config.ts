@@ -1,6 +1,7 @@
-import { readFile } from "fs/promises";
+// TO BE MOVED OUT OF CORE
+
+/*import { readFile } from "fs/promises";
 import { load as parseYaml } from "js-yaml";
-import type { CraftswainConfig } from "./craftswain-config";
 import { join } from "path";
 import { createRequire } from "module";
 
@@ -19,3 +20,4 @@ export const loadYamlConfig = async (rootPath: string) => {
   });
   return parseYaml(file) as CraftswainConfig;
 };
+*/
