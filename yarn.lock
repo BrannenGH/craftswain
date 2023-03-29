@@ -449,6 +449,7 @@ __metadata:
   resolution: "@craftswain/docker@workspace:packages/docker"
   dependencies:
     "@craftswain/core": ^0.1.0
+    "@craftswain/utils-advanced-promises": ^0.1.0
     "@jest/globals": ^29.5.0
     "@jest/types": ^29.4.3
     "@types/debug": ^4.1.7
@@ -514,7 +515,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@craftswain/utils-advanced-promises@workspace:packages/utils-advanced-promises":
+"@craftswain/utils-advanced-promises@^0.1.0, @craftswain/utils-advanced-promises@workspace:packages/utils-advanced-promises":
   version: 0.0.0-use.local
   resolution: "@craftswain/utils-advanced-promises@workspace:packages/utils-advanced-promises"
   dependencies:

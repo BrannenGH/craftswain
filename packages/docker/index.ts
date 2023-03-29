@@ -1,18 +1,23 @@
-import { Store, PLazy } from "@craftswain/core";
+import { CraftswainPlugin } from "@craftswain/core";
+import { PLazy } from "@craftswain/utils-advanced-promises";
 import Docker from "dockerode";
 import { dockerApi } from "./container/container-lifecycle";
+import { DockerTestObjectConfig } from "./docker-test-object-config";
 export * from "./container/index";
 
-export default (store: Store/*TODO: , config: unknown*/) => {
-  store.set(
-    "docker",
+const dockerPlugin: CraftswainPlugin = (
+  set,
+  config: DockerTestObjectConfig
+) => {
+  set(
+    config.name,
     new PLazy(() =>
-      Promise.resolve(
-        dockerApi(
-          new Docker()
-        )
-      )
+      Promise.resolve(dockerApi(new Docker(config.dockerOptions)))
     ),
-    (dockerApi) => dockerApi.cleanupStreams()
+    (config) => {
+      config.onCleanup(async (docker) => (await docker).cleanupStreams());
+    }
   );
 };
+
+export default dockerPlugin;
