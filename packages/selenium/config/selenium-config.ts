@@ -1,8 +1,6 @@
-export type SeleniumConfig = {
-  webdrivers: WebDriverConfig[];
-};
+import { TestObjectConfig } from "@craftswain/core";
 
-export type WebDriverConfig = {
+export type SeleniumConfig = TestObjectConfig & {
   name?: string;
   uri?: string;
   local?: {

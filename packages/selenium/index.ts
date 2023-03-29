@@ -1,15 +1,15 @@
 import { PageModel } from "./page-model";
-import { By, WebDriver } from "selenium-webdriver";
+import { By, ThenableWebDriver, WebDriver } from "selenium-webdriver";
 import { buildWebdriver } from "./factories/webdriver-factory";
-import type { Store, TestObjectConfig } from "@craftswain/core";
-import { PLazy, PRetry } from "@craftswain/core";
-import { WebDriverConfig } from "./config/selenium-config";
+import type { CraftswainPlugin } from "@craftswain/core";
+import { PLazy, PRetry } from "@craftswain/utils-advanced-promises";
 import debug from "./debug";
 import delay from "delay";
+import { SeleniumConfig } from "./config/selenium-config";
 
 export { PageModel };
 
-export default (store: Store, config: TestObjectConfig & WebDriverConfig) => {
+const SeleniumPlugin: CraftswainPlugin = (set, config: SeleniumConfig) => {
   debug("Building webdriver %s with config: %j", config.name, config);
   const driverPromise = new PLazy(() => {
     return PRetry(
@@ -40,7 +40,9 @@ export default (store: Store, config: TestObjectConfig & WebDriverConfig) => {
     );
   });
 
-  store.set<WebDriver>(config.name, driverPromise, async (driver) =>
-    driver.quit()
+  set(config.name, driverPromise, (config) =>
+    config.onCleanup(async (driver) => (await driver).quit())
   );
 };
+
+export default SeleniumPlugin;

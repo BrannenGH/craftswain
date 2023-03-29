@@ -1,5 +1,7 @@
 import type { Config } from "jest";
 
+process.env["DEBUG"] = "craftswain:core";
+
 const config: Config = {
   clearMocks: true,
   coverageProvider: "v8",

@@ -6,11 +6,10 @@ import {
 } from "selenium-webdriver";
 import { FileDetector } from "selenium-webdriver/remote";
 import { ServiceBuilder } from "selenium-webdriver/chrome";
-import { WebDriverConfig } from "../config/selenium-config";
-import { proxyWebDriver } from "../overrides/web-driver";
 import debug from "../debug";
+import { SeleniumConfig } from "../config/selenium-config";
 
-const buildLocalDriver = (config: WebDriverConfig) => {
+const buildLocalDriver = (config: SeleniumConfig) => {
   debug("Building local webdriver");
   const service = new ServiceBuilder();
 
@@ -27,7 +26,7 @@ const buildLocalDriver = (config: WebDriverConfig) => {
     .build();
 };
 
-const buildRemoteDriver = (config: WebDriverConfig) => {
+const buildRemoteDriver = (config: SeleniumConfig) => {
   debug("Building remote webdriver");
   debug("Connecting to URI %s", config.remote?.uri);
 
@@ -41,7 +40,7 @@ const buildRemoteDriver = (config: WebDriverConfig) => {
   return driver;
 };
 
-export const buildWebdriver = (config: WebDriverConfig) => {
+export const buildWebdriver = (config: SeleniumConfig) => {
   let driver: ThenableWebDriver;
 
   if (config.local) {

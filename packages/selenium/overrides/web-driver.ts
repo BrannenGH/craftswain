@@ -1,5 +1,6 @@
-import { Locator, WebDriver, WebElementPromise } from "selenium-webdriver";
-import { ProxyBuilder, PRetry } from "@craftswain/core";
+import { WebDriver, WebElementPromise } from "selenium-webdriver";
+import { ProxyBuilder } from "@craftswain/utils-proxy-builder";
+import { PRetry } from "@craftswain/utils-advanced-promises";
 import debug from "../debug";
 import delay from "delay";
 

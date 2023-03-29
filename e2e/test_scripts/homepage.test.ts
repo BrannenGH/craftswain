@@ -20,7 +20,7 @@ describe("Remote Selenium", () => {
   beforeAll(async () => {
     const image = "selenium/standalone-chrome:110.0";
     const name = "RemoteSelenium";
-    docker = await global.docker;
+    docker = await global.get("docker");
 
     await docker.pullImage(image);
 
@@ -61,7 +61,7 @@ describe("Remote Selenium", () => {
   }, 604800000);
 
   test.only("Remote browser: Open browser and go to webpage", async () => {
-    const driver: WebDriver = await global.remoteWebDriver;
+    const driver: WebDriver = await global.get("remoteWebDriver");
 
     const t = driver.findElement(By.css("ul li:nth-of-type(1) a"));
 

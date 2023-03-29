@@ -1,45 +1,66 @@
-export type CleanupTestObject<T> = (testObject: T) => PromiseLike<void>;
-
-export class TestObject<T> {
-  private cleanedUp = false;
-  private _cleanup;
-
-  constructor(public object: PromiseLike<T>, cleanup?: CleanupTestObject<T>) {
-    this._cleanup = cleanup;
-  }
-
-  public async cleanup() {
-    if (this.needsCleanUp && this._cleanup) {
-      this.cleanedUp = true;
-      return this._cleanup(await this.object);
-    }
-    return Promise.resolve();
-  }
-
-  get needsCleanUp(): boolean {
-    let needsCleanUp = !this.cleanedUp;
-
-    // If hasn't executed, don't need cleanup
-    if (
-      "executed" in this.object &&
-      !(this.object as { executed: boolean }).executed
-    ) {
-      needsCleanUp = false;
-    }
-
-    return needsCleanUp;
-  }
-}
-
-/**
- * Handle used to register a test object.
- *
- * Each test object is assumed to have it's own unique key.
- */
-export type TestObjects<T> = { [key: string]: TestObject<T> };
+import { StoreConfiguration, TestObject, TestObjects } from ".";
+import { CraftswainConfig } from "../config";
+import debug from "../debug";
+import { loadPlugin } from "../plugin";
 
 export class TestStore {
-  cleanupHandles: (() => PromiseLike<void>)[] = [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  testObjects: TestObjects<any> = {};
+  private testObjects: TestObjects<unknown> = {};
+
+  constructor(private config?: CraftswainConfig) {
+    this.loadPlugins(config);
+  }
+
+  private loadPlugins(config?: CraftswainConfig) {
+    if (config && config.testObjects && config.rootDirectory) {
+      config.testObjects?.forEach((testObjConfig) => {
+        const plugin = loadPlugin(
+          testObjConfig.type,
+          config.rootDirectory as string
+        );
+        plugin((...args) => this.set(...args), testObjConfig, /* TODO: */ {});
+      });
+    }
+  }
+
+  /**
+   * Registers an object to be used in the test environment.
+   *
+   * @param registerHandle Registers an object to be used in the test environment.
+   * @param cleanupHandle Registers a method to cleanup the object.
+   */
+  public set<T>(
+    name: string,
+    obj: T,
+    configure?: (configure: StoreConfiguration<T>) => void
+  ) {
+    debug("Registering %s with value %j", name, obj);
+
+    this.testObjects[name] = new TestObject(
+      obj,
+      configure
+    ) as unknown as TestObject<unknown>;
+  }
+
+  /**
+   * Grabs a reference to a test object with the following name.
+   *
+   * @param name The name of the test object.
+   * @returns A promise for the test object
+   */
+  public get<T>(name: string) {
+    return this.testObjects[name].object as T;
+  }
+
+  /**
+   * Cleanup the test objects.
+   */
+  public async cleanup() {
+    await Promise.all(
+      Object.keys(this.testObjects).map((x) => {
+        if (this.testObjects && this.testObjects[x]) {
+          this.testObjects[x]?.cleanup();
+        }
+      })
+    );
+  }
 }

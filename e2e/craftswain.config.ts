@@ -1,6 +1,7 @@
 import { CraftswainConfig } from "@craftswain/core";
 
 const config: CraftswainConfig = {
+  rootDirectory: ".",
   testObjects: [],
 };
 

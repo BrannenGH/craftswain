@@ -12,25 +12,25 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
+          cache: "yarn"
 
-      - name: Run install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: run build
+      - name: Setup Corepack
+        run: corepack enable
 
-      - name: Run lint
-        continue-on-error: true
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: run lint
+      - name: Setup yarn
+        run: corepack prepare yarn@stable --activate
+
+      - name: Install
+        run: yarn install
+
+      - name: Build
+        run: yarn run build
+
+      - name: Run linter
+        run: yarn run lint
 
       - name: Run tests
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: run test
+        run: yarn run test
 
       - name: Run e2e tests
-        continue-on-error: true
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: run start
+        run: yarn run start

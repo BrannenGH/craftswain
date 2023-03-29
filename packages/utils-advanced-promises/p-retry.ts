@@ -1,7 +1,8 @@
 // Borrowed from https://github.com/sindresorhus/p-retry
+// I have taken file directly due to above being published only as module
 
 import retry from "retry";
-import debug from "../debug";
+import debug from "./debug";
 
 const networkErrorMsgs = new Set([
   "Failed to fetch", // Chrome
@@ -12,7 +13,9 @@ const networkErrorMsgs = new Set([
 ]);
 
 export class AbortError extends Error {
-  constructor(message) {
+  public originalError?: Error;
+
+  constructor(message: any) {
     super();
 
     if (message instanceof Error) {
@@ -28,7 +31,11 @@ export class AbortError extends Error {
   }
 }
 
-const decorateErrorWithCounts = (error, attemptNumber, options) => {
+const decorateErrorWithCounts = (
+  error: Error & { attemptNumber: number; retriesLeft: number },
+  attemptNumber: number,
+  options: any
+) => {
   // Minus 1 from attemptNumber because the first attempt does not count as a retry
   const retriesLeft = options.retries - (attemptNumber - 1);
 
@@ -37,14 +44,22 @@ const decorateErrorWithCounts = (error, attemptNumber, options) => {
   return error;
 };
 
-const isNetworkError = (errorMessage) => networkErrorMsgs.has(errorMessage);
+const isNetworkError = (errorMessage: string) =>
+  networkErrorMsgs.has(errorMessage);
 
-const getDOMException = (errorMessage) =>
+const getDOMException = (errorMessage: string) =>
   globalThis.DOMException === undefined
     ? new Error(errorMessage)
     : new DOMException(errorMessage);
 
-export default async function pRetry(input, options) {
+export default async function pRetry<T>(
+  input: (attempt?: number) => Promise<T>,
+  options?: {
+    retries?: number;
+    onFailedAttempt?: (error: Error) => Promise<void>;
+    signal?: any;
+  }
+): Promise<T> {
   return new Promise((resolve, reject) => {
     options = {
       onFailedAttempt: undefined,
@@ -54,7 +69,7 @@ export default async function pRetry(input, options) {
 
     const operation = retry.operation(options);
 
-    operation.attempt(async (attemptNumber) => {
+    operation.attempt(async (attemptNumber: number) => {
       try {
         debug("Attemping to resolve.");
         resolve(await input(attemptNumber));
@@ -83,11 +98,11 @@ export default async function pRetry(input, options) {
           reject(error);
         } else {
           debug("Retrying");
-          decorateErrorWithCounts(error, attemptNumber, options);
+          decorateErrorWithCounts(error as any, attemptNumber, options);
 
           try {
             debug("executing onFailed attempt");
-            if (options.onFailedAttempt) {
+            if (options?.onFailedAttempt) {
               await options.onFailedAttempt(error);
             }
           } catch (error) {
@@ -109,7 +124,7 @@ export default async function pRetry(input, options) {
         () => {
           operation.stop();
           const reason =
-            options.signal.reason === undefined
+            options?.signal.reason === undefined
               ? getDOMException("The operation was aborted.")
               : options.signal.reason;
           reject(reason instanceof Error ? reason : getDOMException(reason));

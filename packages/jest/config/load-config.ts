@@ -1,8 +1,8 @@
 import { readFile } from "fs/promises";
 import { load as parseYaml } from "js-yaml";
-import type { CraftswainConfig } from "./craftswain-config";
 import { join } from "path";
 import { createRequire } from "module";
+import { CraftswainConfig } from "@craftswain/core";
 
 export const loadJSConfig = async (rootPath: string) => {
   const targetRequire = createRequire(rootPath);

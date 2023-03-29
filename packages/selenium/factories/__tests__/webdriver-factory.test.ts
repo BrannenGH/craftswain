@@ -42,6 +42,7 @@ import { buildWebdriver } from "../webdriver-factory";
 
 test("Local WebDriver should have appropriate path", () => {
   const config = {
+    type: "@craftswain/selenium",
     name: "Test",
     uri: "https://google.com/",
     local: {

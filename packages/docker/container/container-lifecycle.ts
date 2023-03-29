@@ -1,4 +1,4 @@
-import { PRetry } from "@craftswain/core";
+import { PRetry } from "@craftswain/utils-advanced-promises";
 import delay from "delay";
 import type Docker from "dockerode";
 import internal from "stream";
@@ -35,9 +35,9 @@ export const dockerApi = (docker: Docker) => {
     },
     createContainer: async (options: Docker.ContainerCreateOptions) =>
       PRetry(() => docker.createContainer(options), {
-          onFailedAttempt: () => delay(500),
-          retries: 5,
-      }),
+        onFailedAttempt: () => delay(500),
+        retries: 5,
+      }) as Promise<Docker.Container>,
     getContainers: async (
       filter: (container: Docker.ContainerInfo) => boolean
     ): Promise<Docker.ContainerInfo[]> => {
@@ -99,8 +99,8 @@ export const dockerApi = (docker: Docker) => {
       );
     },
     cleanupStreams: async () => {
-      dockerApi.streams.forEach(x => x.removeAllListeners());
-    }
+      dockerApi.streams.forEach((x) => x.removeAllListeners());
+    },
   };
   return dockerApi;
 };
