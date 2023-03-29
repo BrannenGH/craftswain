@@ -20,11 +20,14 @@ jobs:
       - name: Setup yarn
         run: corepack prepare yarn@stable --activate
 
+      - name: Install
+        run: yarn run install
+
       - name: Build
-        run: yarn build
+        run: yarn run build
 
       - name: Run linter
-        run: yarn lint
+        run: yarn run lint
 
       - name: Run tests
         run: yarn run test
