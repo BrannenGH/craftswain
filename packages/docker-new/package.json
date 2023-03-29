@@ -4,7 +4,7 @@
   "packageManager": "yarn@3.4.1",
   "version": "0.1.0",
   "scripts": {
-    "build": "tinygo build -o module.wasm -target wasi .",
+    "build": "GOOS=linux gopherjs build .",
     "test": "jest -c out/jest.config.js",
     "clean": "shx rm -rf out/ > /dev/null",
     "lint": "npx eslint ."

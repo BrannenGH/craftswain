@@ -424,7 +424,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@craftswain/core@^0.1.0, @craftswain/core@workspace:packages/core":
+"@craftswain/core@^0.1.0, @craftswain/core@workspace:^0.1.0, @craftswain/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@craftswain/core@workspace:packages/core"
   dependencies:
@@ -448,7 +448,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@craftswain/docker-old@workspace:packages/docker"
   dependencies:
-    "@craftswain/core": ^0.1.0
+    "@craftswain/core": "workspace:^0.1.0"
+    "@craftswain/utils-advanced-promises": "workspace:^0.1.0"
     "@jest/globals": ^29.5.0
     "@jest/types": ^29.4.3
     "@types/debug": ^4.1.7
@@ -467,12 +468,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@craftswain/docker@^0.1.0, @craftswain/docker@workspace:packages/docker-new":
+"@craftswain/docker@workspace:^0.1.0, @craftswain/docker@workspace:packages/docker-new":
   version: 0.0.0-use.local
   resolution: "@craftswain/docker@workspace:packages/docker-new"
   dependencies:
     "@craftswain/core": ^0.1.0
-    "@craftswain/utils-advanced-promises": ^0.1.0
     "@jest/globals": ^29.5.0
     "@jest/types": ^29.4.3
     "@types/debug": ^4.1.7
@@ -491,11 +491,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@craftswain/jest@^0.1.0, @craftswain/jest@workspace:packages/jest":
+"@craftswain/jest@workspace:^0.1.0, @craftswain/jest@workspace:packages/jest":
   version: 0.0.0-use.local
   resolution: "@craftswain/jest@workspace:packages/jest"
   dependencies:
-    "@craftswain/core": ^0.1.0
+    "@craftswain/core": "workspace:^0.1.0"
     "@jest/environment": ^29.4.3
     "@jest/types": ^29.4.3
     "@types/debug": ^4.1.7
@@ -513,14 +513,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@craftswain/selenium@^0.1.0, @craftswain/selenium@workspace:packages/selenium":
+"@craftswain/selenium@workspace:^0.1.0, @craftswain/selenium@workspace:packages/selenium":
   version: 0.0.0-use.local
   resolution: "@craftswain/selenium@workspace:packages/selenium"
   dependencies:
-    "@craftswain/core": ^0.1.0
-    "@craftswain/jest": ^0.1.0
-    "@craftswain/utils-advanced-promises": "workspace:^"
-    "@craftswain/utils-proxy-builder": "workspace:^"
+    "@craftswain/core": "workspace:^0.1.0"
+    "@craftswain/jest": "workspace:^0.1.0"
+    "@craftswain/utils-advanced-promises": "workspace:^0.1.0"
+    "@craftswain/utils-proxy-builder": "workspace:^0.1.0"
     "@jest/environment": ^29.4.3
     "@jest/globals": ^29.5.0
     "@types/debug": ^4.1.7
@@ -540,7 +540,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@craftswain/utils-advanced-promises@^0.1.0, @craftswain/utils-advanced-promises@workspace:^, @craftswain/utils-advanced-promises@workspace:packages/utils-advanced-promises":
+"@craftswain/utils-advanced-promises@workspace:^0.1.0, @craftswain/utils-advanced-promises@workspace:packages/utils-advanced-promises":
   version: 0.0.0-use.local
   resolution: "@craftswain/utils-advanced-promises@workspace:packages/utils-advanced-promises"
   dependencies:
@@ -560,7 +560,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@craftswain/utils-proxy-builder@workspace:^, @craftswain/utils-proxy-builder@workspace:packages/utils-proxy-builder":
+"@craftswain/utils-proxy-builder@workspace:^0.1.0, @craftswain/utils-proxy-builder@workspace:packages/utils-proxy-builder":
   version: 0.0.0-use.local
   resolution: "@craftswain/utils-proxy-builder@workspace:packages/utils-proxy-builder"
   dependencies:
@@ -3013,10 +3013,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "craftswain-test-scripts@workspace:e2e"
   dependencies:
-    "@craftswain/core": ^0.1.0
-    "@craftswain/docker": ^0.1.0
-    "@craftswain/jest": ^0.1.0
-    "@craftswain/selenium": ^0.1.0
+    "@craftswain/core": "workspace:^0.1.0"
+    "@craftswain/docker": "workspace:^0.1.0"
+    "@craftswain/jest": "workspace:^0.1.0"
+    "@craftswain/selenium": "workspace:^0.1.0"
     "@jest/globals": ^29.4.3
     "@types/dockerode": ^3.3.14
     "@types/node": ^18.14.2

@@ -14,7 +14,7 @@
   "author": "Brannen Hall",
   "license": "MIT",
   "dependencies": {
-    "@craftswain/core": "^0.1.0",
+    "@craftswain/core": "workspace:^0.1.0",
     "@jest/environment": "^29.4.3",
     "debug": "^4.3.4",
     "jest-environment-node": "^29.4.3",

@@ -14,8 +14,8 @@
   "author": "Brannen Hall",
   "license": "MIT",
   "dependencies": {
-    "@craftswain/core": "^0.1.0",
-    "@craftswain/utils-advanced-promises": "^0.1.0",
+    "@craftswain/core": "workspace:^0.1.0",
+    "@craftswain/utils-advanced-promises": "workspace:^0.1.0",
     "debug": "^4.3.4",
     "delay": "^5.0.0",
     "dockerode": "^3.3.4"
