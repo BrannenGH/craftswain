@@ -40,8 +40,8 @@ const SeleniumPlugin: CraftswainPlugin = (set, config: SeleniumConfig) => {
     );
   });
 
-  set(config.name, driverPromise, async (driver) =>
-    ((await driver) as any).quit()
+  set(config.name, driverPromise, (config) =>
+    config.onCleanup(async (driver) => (await driver).quit())
   );
 };
 

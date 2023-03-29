@@ -61,7 +61,7 @@ describe("Remote Selenium", () => {
   }, 604800000);
 
   test.only("Remote browser: Open browser and go to webpage", async () => {
-    const driver: WebDriver = await global.remoteWebDriver;
+    const driver: WebDriver = await global.get("remoteWebDriver");
 
     const t = driver.findElement(By.css("ul li:nth-of-type(1) a"));
 

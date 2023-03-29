@@ -22,6 +22,8 @@ export class CraftswainEnvironment extends TestEnvironment {
       this.jestConfig.projectConfig.rootDir
     );
 
+    craftswainConfig.rootDirectory = this.jestConfig.projectConfig.rootDir;
+
     const [get, set, cleanup] = useStore(craftswainConfig);
     this.global.set = set;
     this.global.get = get;

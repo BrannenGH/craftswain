@@ -1,4 +1,4 @@
-import { setToStore } from "../store";
+import { setToStore, TestObject } from "../store";
 import { TestObjectConfig } from "../config";
 
 export * from "./load-plugin";
@@ -6,8 +6,8 @@ export * from "./load-plugin";
 /**
  * The type for the default export for a plugin.
  */
-export type CraftswainPlugin = (
+export type CraftswainPlugin<T extends TestObjectConfig = TestObjectConfig> = (
   set: setToStore,
-  config: TestObjectConfig,
+  config: T,
   dependencies: { [key: string]: () => unknown }
 ) => void;

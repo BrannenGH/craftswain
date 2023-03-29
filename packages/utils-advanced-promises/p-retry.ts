@@ -52,7 +52,14 @@ const getDOMException = (errorMessage: string) =>
     ? new Error(errorMessage)
     : new DOMException(errorMessage);
 
-export default async function pRetry(input: any, options: any) {
+export default async function pRetry<T>(
+  input: (attempt?: number) => Promise<T>,
+  options?: {
+    retries?: number;
+    onFailedAttempt?: (error: Error) => Promise<void>;
+    signal?: any;
+  }
+): Promise<T> {
   return new Promise((resolve, reject) => {
     options = {
       onFailedAttempt: undefined,
@@ -95,7 +102,7 @@ export default async function pRetry(input: any, options: any) {
 
           try {
             debug("executing onFailed attempt");
-            if (options.onFailedAttempt) {
+            if (options?.onFailedAttempt) {
               await options.onFailedAttempt(error);
             }
           } catch (error) {
@@ -117,7 +124,7 @@ export default async function pRetry(input: any, options: any) {
         () => {
           operation.stop();
           const reason =
-            options.signal.reason === undefined
+            options?.signal.reason === undefined
               ? getDOMException("The operation was aborted.")
               : options.signal.reason;
           reject(reason instanceof Error ? reason : getDOMException(reason));

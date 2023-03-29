@@ -8,7 +8,7 @@ export type TestObjectConfig = {
 /**
  * Craftswain configuration
  */
-export type CraftswainConfig = Partial<{
+export type CraftswainConfig = {
   /**
    * Root directory used for resolving plugins.
    */
@@ -18,4 +18,4 @@ export type CraftswainConfig = Partial<{
    * A collection of test objects.
    */
   testObjects: TestObjectConfig[];
-}>;
+};
