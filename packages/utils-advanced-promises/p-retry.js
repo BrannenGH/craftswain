@@ -1,4 +1,5 @@
 // Borrowed from https://github.com/sindresorhus/p-retry
+// I have taken file directly due to above being published only as module
 
 import retry from "retry";
 import debug from "../debug";
