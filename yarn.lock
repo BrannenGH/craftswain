@@ -496,6 +496,8 @@ __metadata:
   dependencies:
     "@craftswain/core": ^0.1.0
     "@craftswain/jest": ^0.1.0
+    "@craftswain/utils-advanced-promises": "workspace:^"
+    "@craftswain/utils-proxy-builder": "workspace:^"
     "@jest/environment": ^29.4.3
     "@jest/globals": ^29.5.0
     "@types/debug": ^4.1.7
@@ -515,7 +517,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@craftswain/utils-advanced-promises@^0.1.0, @craftswain/utils-advanced-promises@workspace:packages/utils-advanced-promises":
+"@craftswain/utils-advanced-promises@^0.1.0, @craftswain/utils-advanced-promises@workspace:^, @craftswain/utils-advanced-promises@workspace:packages/utils-advanced-promises":
   version: 0.0.0-use.local
   resolution: "@craftswain/utils-advanced-promises@workspace:packages/utils-advanced-promises"
   dependencies:
@@ -534,7 +536,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@craftswain/utils-proxy-builder@workspace:packages/utils-proxy-builder":
+"@craftswain/utils-proxy-builder@workspace:^, @craftswain/utils-proxy-builder@workspace:packages/utils-proxy-builder":
   version: 0.0.0-use.local
   resolution: "@craftswain/utils-proxy-builder@workspace:packages/utils-proxy-builder"
   dependencies:
