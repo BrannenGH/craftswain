@@ -21,7 +21,7 @@ jobs:
         run: corepack prepare yarn@stable --activate
 
       - name: Install
-        run: yarn run install
+        run: yarn install
 
       - name: Build
         run: yarn run build
