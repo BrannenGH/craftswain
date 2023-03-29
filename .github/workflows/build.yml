@@ -14,6 +14,12 @@ jobs:
           node-version: 16.x
           cache: "yarn"
 
+      - name: Setup Corepack
+        run: corepack enable
+
+      - name: Setup yarn
+        run: corepack prepare yarn@stable --activate
+
       - name: Build
         run: yarn build
 
