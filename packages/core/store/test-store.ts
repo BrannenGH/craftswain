@@ -1,37 +1,23 @@
-import { createRequire } from "module";
-import {
-  CraftswainPlugin,
-  StoreConfiguration,
-  TestObject,
-  TestObjects,
-} from ".";
+import { StoreConfiguration, TestObject, TestObjects } from ".";
 import { CraftswainConfig } from "../config";
 import debug from "../debug";
+import { loadPlugin } from "../plugin";
 
 export class TestStore {
   private testObjects: TestObjects<unknown> = {};
 
   constructor(private config?: CraftswainConfig) {
-    if (config) {
-      this.buildStore(config);
-    }
+    this.loadPlugins(config);
   }
 
-  private buildStore(config: CraftswainConfig) {
-    if (config.testObjects && config.rootDirectory) {
+  private loadPlugins(config?: CraftswainConfig) {
+    if (config && config.testObjects && config.rootDirectory) {
       config.testObjects?.forEach((testObjConfig) => {
-        const targetRequire = createRequire(config.rootDirectory as string);
-
-        const resolved = targetRequire.resolve(testObjConfig.type);
-        const instance = targetRequire(resolved) as {
-          default: CraftswainPlugin;
-        };
-
-        instance.default(
-          (...args) => this.set(...args),
-          testObjConfig,
-          /* TODO: */ {}
+        const plugin = loadPlugin(
+          testObjConfig.type,
+          config.rootDirectory as string
         );
+        plugin((...args) => this.set(...args), testObjConfig, /* TODO: */ {});
       });
     }
   }

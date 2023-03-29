@@ -1,4 +1,3 @@
-import { CraftswainConfig, TestObjectConfig } from "../config";
 import { TestObject } from "./test-object";
 
 export * from "./test-object";
@@ -6,15 +5,6 @@ export * from "./test-store";
 export * from "./use-store";
 
 // Public facing API
-
-/**
- * The type for the default export for a plugin.
- */
-export type CraftswainPlugin = (
-  set: setToStore,
-  config: TestObjectConfig,
-  dependencies: { [key: string]: () => unknown }
-) => void;
 
 /**
  * Configure how craftswain manages the test object.
@@ -30,12 +20,12 @@ export type StoreConfiguration<T> = {
 /**
  * Get an object from the store.
  */
-type getFromStore = <T>(key: string) => T;
+export type getFromStore = <T>(key: string) => T;
 
 /**
  * Set an object to the store.
  */
-type setToStore = <T>(
+export type setToStore = <T>(
   name: string,
   obj: T,
   configure?: (configure: StoreConfiguration<T>) => void
