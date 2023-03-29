@@ -31,24 +31,6 @@ export type setToStore = <T>(
   configure?: (configure: StoreConfiguration<T>) => void
 ) => void;
 
-export type StoreAccess = [
-  /**
-   * Grabs a reference to a test object with the following name.
-   *
-   * @param name The name of the test object.
-   * @returns A promise for the test object
-   */
-  get: getFromStore,
-
-  /**
-   * Registers an object to be used in the test environment.
-   *
-   * @param registerHandle Registers an object to be used in the test environment.
-   * @param cleanupHandle Registers a method to cleanup the object.
-   */
-  set: setToStore
-];
-
 /**
  * Handle used to register a test object.
  *

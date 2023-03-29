@@ -20,7 +20,7 @@ describe("Remote Selenium", () => {
   beforeAll(async () => {
     const image = "selenium/standalone-chrome:110.0";
     const name = "RemoteSelenium";
-    docker = await global.docker;
+    docker = await global.get("docker");
 
     await docker.pullImage(image);
 

@@ -1,5 +1,5 @@
 import debug from "../debug";
-import { StoreAccess, TestStore } from ".";
+import { getFromStore, setToStore, TestStore } from ".";
 import { CraftswainConfig } from "../config";
 
 export const useStore = (config?: CraftswainConfig) => {
@@ -8,5 +8,6 @@ export const useStore = (config?: CraftswainConfig) => {
   return [
     (...args) => store.get(...args),
     (...args) => store.set(...args),
-  ] as StoreAccess;
+    (...args) => store.cleanup(...args),
+  ] as [getFromStore, setToStore, () => Promise<void>];
 };

@@ -4,7 +4,7 @@ const config: CraftswainConfig = {
   testObjects: [],
 };
 
-config.testObjects.push({
+config.testObjects?.push({
   name: "remoteWebDriver",
   type: "@craftswain/selenium",
   uri: "http://the-internet.herokuapp.com/",
@@ -13,12 +13,12 @@ config.testObjects.push({
   },
 });
 
-config.testObjects.push({
+config.testObjects?.push({
   name: "docker",
   type: "@craftswain/docker",
 });
 
-config.testObjects.push({
+config.testObjects?.push({
   name: "localWebDriver",
   type: "@craftswain/selenium",
   uri: "http://the-internet.herokuapp.com/",

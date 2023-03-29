@@ -1,9 +1,4 @@
-// TO BE MOVED OUT OF CORE
-test("", () => {
-  return;
-});
-/**
- * import fs from "fs/promises";
+import fs from "fs/promises";
 import { loadYamlConfig } from "../load-config";
 import { expect, jest, test } from "@jest/globals";
 
@@ -25,11 +20,10 @@ test("YAML configuration loads correctly", async () => {
   expect(config).toBeDefined();
   expect(config.testObjects).toBeDefined();
   expect(config.testObjects).toHaveLength(2);
-  expect(config.testObjects[0].name).toBe("test1");
+  /*expect(config.testObjects[0].name).toBe("test1");
   expect(config.testObjects[1].name).toBe("test2");
   expect(config.testObjects[0].type).toBe("@craftswain/test");
   expect(config.testObjects[1].type).toBe("@craftswain/test");
   expect(config.testObjects[1]).toHaveProperty("example");
-  expect(config.testObjects[1].example).toBe("value");
+  expect(config.testObjects[1].example).toBe("value");*/
 });
-*/

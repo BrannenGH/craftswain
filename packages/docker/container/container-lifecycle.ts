@@ -37,7 +37,7 @@ export const dockerApi = (docker: Docker) => {
       PRetry(() => docker.createContainer(options), {
         onFailedAttempt: () => delay(500),
         retries: 5,
-      }),
+      }) as Promise<Docker.Container>,
     getContainers: async (
       filter: (container: Docker.ContainerInfo) => boolean
     ): Promise<Docker.ContainerInfo[]> => {

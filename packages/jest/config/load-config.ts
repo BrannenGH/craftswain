@@ -1,9 +1,8 @@
-// TO BE MOVED OUT OF CORE
-
-/*import { readFile } from "fs/promises";
+import { readFile } from "fs/promises";
 import { load as parseYaml } from "js-yaml";
 import { join } from "path";
 import { createRequire } from "module";
+import { CraftswainConfig } from "@craftswain/core";
 
 export const loadJSConfig = async (rootPath: string) => {
   const targetRequire = createRequire(rootPath);
@@ -20,4 +19,3 @@ export const loadYamlConfig = async (rootPath: string) => {
   });
   return parseYaml(file) as CraftswainConfig;
 };
-*/

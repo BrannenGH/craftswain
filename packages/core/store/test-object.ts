@@ -26,7 +26,7 @@ export class TestObject<T> implements StoreConfiguration<T> {
     this.cleanupFunctions.push(cleanupFunction);
   }
 
-  public async runCleanup() {
+  public async cleanup() {
     if (this.accessed) {
       await Promise.all(
         this.cleanupFunctions.map((fn) => fn(this.wrappedObject))

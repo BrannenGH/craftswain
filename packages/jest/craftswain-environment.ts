@@ -1,14 +1,14 @@
 import TestEnvironment from "jest-environment-node";
 import Winston from "winston";
 import { EnvironmentContext, JestEnvironmentConfig } from "@jest/environment";
-import { loadJSConfig, Store, useStore } from "@craftswain/core";
-import { createRequire } from "module";
+import { useStore } from "@craftswain/core";
 import { Global } from "@jest/types";
+import { loadJSConfig } from "./config/load-config";
 
 export class CraftswainEnvironment extends TestEnvironment {
   declare global: Global.Global;
   jestConfig: JestEnvironmentConfig;
-  private testStore?: Store;
+  cleanup?: () => Promise<void>;
 
   constructor(config: JestEnvironmentConfig, context: EnvironmentContext) {
     super(config, context);
@@ -18,44 +18,26 @@ export class CraftswainEnvironment extends TestEnvironment {
   async setup() {
     await super.setup();
 
-    const testStore = useStore();
-    this.testStore = testStore;
-    this.global.testStore = testStore;
-
     const craftswainConfig = await loadJSConfig(
       this.jestConfig.projectConfig.rootDir
     );
 
-    craftswainConfig.testObjects.forEach((config) => {
-      const targetRequire = createRequire(
-        this.jestConfig.projectConfig.rootDir
-      );
-
-      const resolved = targetRequire.resolve(config.type);
-      const instance = targetRequire(resolved);
-
-      instance.default(testStore, config);
-    });
+    const [get, set, cleanup] = useStore(craftswainConfig);
+    this.global.set = set;
+    this.global.get = get;
+    this.cleanup = cleanup;
 
     this.global.logger = Winston.createLogger({
       level: "debug",
       format: Winston.format.simple(),
       transports: [new Winston.transports.Console()],
     });
-
-    testStore.allKeys().forEach((item) => {
-      Object.defineProperty(this.global, item, {
-        get: () => testStore.get(item),
-      });
-    });
   }
 
   async teardown() {
-    await Promise.all(
-      this.testStore
-        ?.allKeys()
-        .map((key) => this.testStore?.cleanup(key) ?? Promise.resolve()) ?? []
-    );
+    if (this.cleanup) {
+      await this.cleanup();
+    }
 
     await super.teardown();
   }

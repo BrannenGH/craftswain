@@ -22,7 +22,7 @@ it("should not run cleanup functions if the object has not been accessed", async
   const cleanupFunction = jest.fn();
   testObject.onCleanup(cleanupFunction);
 
-  await testObject.runCleanup();
+  await testObject.cleanup();
 
   expect(cleanupFunction).not.toHaveBeenCalled();
 });
@@ -33,7 +33,7 @@ it("should run cleanup functions if the object has been accessed", async () => {
   testObject.onCleanup(cleanupFunction);
   const object = testObject.object;
 
-  await testObject.runCleanup();
+  await testObject.cleanup();
 
   expect(cleanupFunction).toHaveBeenCalledWith(object);
 });
@@ -46,7 +46,7 @@ it("should run all cleanup functions if the object has been accessed", async () 
   testObject.onCleanup(cleanupFunction2);
   const object = testObject.object;
 
-  await testObject.runCleanup();
+  await testObject.cleanup();
 
   expect(cleanupFunction1).toHaveBeenCalledWith(object);
   expect(cleanupFunction2).toHaveBeenCalledWith(object);

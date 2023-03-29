@@ -50,4 +50,17 @@ export class TestStore {
   public get<T>(name: string) {
     return this.testObjects[name].object as T;
   }
+
+  /**
+   * Cleanup the test objects.
+   */
+  public async cleanup() {
+    await Promise.all(
+      Object.keys(this.testObjects).map((x) => {
+        if (this.testObjects && this.testObjects[x]) {
+          this.testObjects[x]?.cleanup();
+        }
+      })
+    );
+  }
 }
