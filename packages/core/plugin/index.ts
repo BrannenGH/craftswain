@@ -9,5 +9,5 @@ export * from "./load-plugin";
 export type CraftswainPlugin<T extends TestObjectConfig = TestObjectConfig> = (
   set: setToStore,
   config: T,
-  dependencies: { [key: string]: () => unknown }
+  dependencies?: { [key: string]: () => unknown }
 ) => void;
