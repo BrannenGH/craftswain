@@ -2,11 +2,9 @@
   "name": "root",
   "packageManager": "yarn@3.4.1",
   "scripts": {
-    "prebuild": "yarn install && lerna run clean && lerna run lint",
     "build": "lerna run build",
     "pretest": "lerna run build",
     "test": "lerna run test",
-    "start": "lerna run start --scope=craftswain-test-scripts",
     "clean": "lerna run clean",
     "version": "lerna version --no-private",
     "publish": "lerna publish --no-private",
@@ -14,8 +12,7 @@
     "lint": "lerna run lint"
   },
   "workspaces": [
-    "packages/*",
-    "e2e"
+    "packages/*"
   ],
   "dependencies": {
     "jest": "^29.4.3"
