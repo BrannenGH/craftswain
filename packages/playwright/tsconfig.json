@@ -3,7 +3,7 @@
   "exclude": ["out/", "**/**.d.ts"],
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "./out/",
+    "outDir": ".",
     "watch": false
   }
 }

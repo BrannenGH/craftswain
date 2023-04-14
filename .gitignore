@@ -133,7 +133,10 @@ dist
 .yarn
 
 # Typescript output
-out/
+*.d.ts
+*.d.ts.map
+*.js.map
+*.js
 
 # Webdrivers
 chromedriver

@@ -444,7 +444,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@craftswain/docker@^0.1.0, @craftswain/docker@workspace:packages/docker":
+"@craftswain/docker@^0.1.0, @craftswain/docker@workspace:^, @craftswain/docker@workspace:packages/docker":
   version: 0.0.0-use.local
   resolution: "@craftswain/docker@workspace:packages/docker"
   dependencies:
@@ -468,7 +468,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@craftswain/jest@^0.1.0, @craftswain/jest@workspace:packages/jest":
+"@craftswain/jest@^0.1.0, @craftswain/jest@workspace:^, @craftswain/jest@workspace:packages/jest":
   version: 0.0.0-use.local
   resolution: "@craftswain/jest@workspace:packages/jest"
   dependencies:
@@ -495,6 +495,8 @@ __metadata:
   resolution: "@craftswain/playwright@workspace:packages/playwright"
   dependencies:
     "@craftswain/core": ^0.1.0
+    "@craftswain/docker": "workspace:^"
+    "@craftswain/jest": "workspace:^"
     "@craftswain/utils-advanced-promises": "workspace:^"
     "@craftswain/utils-proxy-builder": "workspace:^"
     "@jest/environment": ^29.4.3
