@@ -4,8 +4,8 @@ FROM buildpack-deps:stable
 
 RUN apt update
 
-# Install less, zsh, and sudo
-RUN apt install -y less sudo zsh
+# Install less, zsh, sudo, and docker
+RUN apt install -y less sudo zsh docker.io
 
 # ADD NODE USER
 RUN groupadd --gid 1000 node \
@@ -18,7 +18,7 @@ RUN groupadd wheel
 
 RUN printf "root ALL=(ALL:ALL) ALL \n%%wheel ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/default
 
-RUN useradd -m -u 1001 -g users -G wheel -s /bin/zsh develop
+RUN useradd -m -u 1001 -g users -G wheel,docker -s /bin/zsh develop
 
 #INSTALL NODE
 

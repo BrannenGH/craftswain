@@ -11,13 +11,21 @@
       "type": "npm",
       "script": "build",
       "problemMatcher": ["$tsc"],
-      "dependsOn": ["lint"]
+      "dependsOn": ["lint"],
     },
     {
       "label": "test",
       "type": "npm",
       "script": "test",
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "problemMatcher": []
+    },
+    {
+      "label": "e2e",
+      "type": "npm",
+      "script": "e2e",
+      "dependsOn": ["build"],
+      "problemMatcher": []
     }
   ]
 }

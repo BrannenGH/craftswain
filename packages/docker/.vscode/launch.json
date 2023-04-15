@@ -4,11 +4,22 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Jest: current file",
+      "name": "Jest: current unit test file",
       "env": { "DEBUG": "*" },
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["run", "--inspect-brk", "jest"],
-      "args": ["${fileBasenameNoExtension}", "--config", "out/jest.config.js"],
+      "args": ["${fileBasenameNoExtension}"],
+      "console": "internalConsole",
+      "preLaunchTask": "build"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest: current e2e file",
+      "env": { "DEBUG": "*" },
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["run", "--inspect-brk", "jest"],
+      "args": ["${fileBasenameNoExtension}", "--config", "e2e/jest.config.js"],
       "console": "internalConsole",
       "preLaunchTask": "build"
     }

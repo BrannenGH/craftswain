@@ -6,7 +6,7 @@
     "build": "lerna run build",
     "pretest": "lerna run build",
     "test": "lerna run test",
-    "start": "lerna run start --scope=craftswain-test-scripts",
+    "start": "lerna run e2e",
     "clean": "lerna run clean",
     "version": "lerna version --no-private",
     "publish": "lerna publish --no-private",

@@ -23,5 +23,5 @@
       "onAutoForward": "notify"
     }
   },
-  "postCreateCommand": "yarn install && yarn build"
+  "postCreateCommand": "sudo chmod 666 /var/run/docker.sock && yarn install && yarn build"
 }

@@ -1,23 +1,8 @@
 import { PRetry } from "@craftswain/utils-advanced-promises";
 import delay from "delay";
 import type Docker from "dockerode";
-import internal from "stream";
 import debug from "../debug";
-
-export const waitForStream = async (
-  docker: Docker,
-  stream: internal.Stream | unknown
-) => {
-  if ((stream as internal.Stream).on) {
-    await new Promise((resolve, reject) => {
-      docker.modem.followProgress(
-        stream as internal.Stream,
-        (err: unknown, res: unknown) => (err ? reject(err) : resolve(res)),
-        (event: Buffer) => debug(event.toString("utf-8"))
-      );
-    });
-  }
-};
+import { waitForStream } from ".";
 
 /**
  * Wraps common docker functions into composite components,
@@ -25,13 +10,13 @@ export const waitForStream = async (
  * @param docker The dockerode instance to wrap
  * @returns An object containing functions to interact with docker.
  */
-export const dockerApi = (docker: Docker) => {
+export const dockerWrapper = (docker: Docker) => {
   const dockerApi = {
     streams: [] as NodeJS.ReadWriteStream[],
     pullImage: async (image: string) => {
       debug(`Pulling image ${image}`);
       const stream = await docker.pull(image);
-      await waitForStream(docker, stream);
+      await waitForStream(docker)(stream);
     },
     createContainer: async (options: Docker.ContainerCreateOptions) =>
       PRetry(() => docker.createContainer(options), {
@@ -71,7 +56,7 @@ export const dockerApi = (docker: Docker) => {
     waitForLastOperation: async (container: Docker.Container) => {
       const stream = await container.wait();
 
-      waitForStream(docker, stream);
+      waitForStream(docker)(stream);
     },
     streamContainer: async (
       container: Docker.Container,

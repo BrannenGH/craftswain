@@ -5,12 +5,13 @@
   "version": "0.1.0",
   "scripts": {
     "build": "tsc",
-    "test": "jest -c out/jest.config.js",
+    "test": "jest",
+    "e2e": "jest -c e2e/jest.config.js",
     "clean": "shx rm -rf out/ > /dev/null",
     "lint": "npx eslint ."
   },
-  "main": "out/index.js",
-  "types": "out/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": "Brannen Hall",
   "license": "MIT",
   "dependencies": {
