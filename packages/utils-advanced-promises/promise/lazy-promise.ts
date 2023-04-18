@@ -1,11 +1,11 @@
-class LazyPromise<T> implements PromiseLike<T> {
-    private wrappedPromise?: Promise<T>;
+export class LazyPromise<T> implements PromiseLike<T> {
+    private wrappedPromise?: PromiseLike<T>;
   
     get executed(): boolean {
       return !!this.wrappedPromise;
     }
   
-    constructor(private promiseConstructor: () => Promise<T>) {}
+    constructor(private promiseConstructor: () => PromiseLike<T>) {}
   
     then<TResult1 = T, TResult2 = never>(
       onfulfilled?:
@@ -24,5 +24,3 @@ class LazyPromise<T> implements PromiseLike<T> {
       return this.wrappedPromise.then(onfulfilled, onrejected);
     }
   }
- 
-export { LazyPromise };

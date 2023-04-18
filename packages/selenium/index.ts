@@ -2,7 +2,7 @@ import { PageModel } from "./page-model";
 import { By, ThenableWebDriver, WebDriver } from "selenium-webdriver";
 import { buildWebdriver } from "./factories/webdriver-factory";
 import type { CraftswainPlugin } from "@craftswain/core";
-import { PLazy, PRetry } from "@craftswain/utils-advanced-promises";
+import { LazyPromise, RetryPromise } from "@craftswain/utils-advanced-promises";
 import debug from "./debug";
 import delay from "delay";
 import { SeleniumConfig } from "./config/selenium-config";
@@ -11,8 +11,8 @@ export { PageModel };
 
 const SeleniumPlugin: CraftswainPlugin = (set, config: SeleniumConfig) => {
   debug("Building webdriver %s with config: %j", config.name, config);
-  const driverPromise = new PLazy(() => {
-    return PRetry(
+  const driverPromise = new LazyPromise(() => {
+    return new RetryPromise(
       async () => {
         const driver = buildWebdriver(config);
         try {

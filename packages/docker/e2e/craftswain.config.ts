@@ -4,10 +4,10 @@ const config: CraftswainConfig = {
   rootDirectory: ".",
   testObjects: [
     {
-        name: "helloWorldDocker",
-        type: "@craftswain/docker",
-        Image: "hello-world",
-    }
+      name: "helloWorldDocker",
+      type: "@craftswain/docker",
+      Image: "hello-world",
+    },
   ],
 };
 

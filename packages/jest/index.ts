@@ -7,6 +7,6 @@ declare const global: any;
  * @param name The test object to get.
  * @returns The test object.
  */
-export const get = global.get as <T>(name: string) => PromiseLike<T>; 
+export const get = global.get as <T>(name: string) => PromiseLike<T>;
 
 export default CraftswainEnvironment;

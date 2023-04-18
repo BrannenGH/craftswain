@@ -1,2 +1,2 @@
-export * from "./wait-for-stream"
-export * from "./docker-wrapper"
+export * from "./wait-for-stream";
+export * from "./extended-docker";

@@ -11,7 +11,7 @@
       "type": "npm",
       "script": "build",
       "problemMatcher": ["$tsc"],
-      "dependsOn": ["lint"],
+      "dependsOn": ["lint"]
     },
     {
       "label": "test",

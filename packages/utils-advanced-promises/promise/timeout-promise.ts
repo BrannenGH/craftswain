@@ -1,12 +1,12 @@
 import delay from "delay";
-import CancelablePromise from "./cancelable-promise";
+import { CancelablePromise } from "./cancelable-promise";
 
 /**
  * TimeoutPromise is a wrapper around Promise that adds timeout functionality.
  * If the base promise doesn't resolve within the specified timeout, the promise will be canceled.
  * The user can choose whether to reject or resolve with undefined on timeout.
  */
-class TimeoutPromise<T> implements PromiseLike<T> {
+export class TimeoutPromise<T> implements PromiseLike<T> {
   private wrappedPromise: CancelablePromise<T>;
   private resolved = false;
 
@@ -79,5 +79,3 @@ class TimeoutPromise<T> implements PromiseLike<T> {
     ]);
   }
 }
-
-export default TimeoutPromise;

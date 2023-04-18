@@ -1,4 +1,4 @@
-import CancelablePromise from "./cancelable-promise";
+import { CancelablePromise } from "./cancelable-promise";
 
 const asyncOperation = (timeout: number) =>
   new Promise((resolve) => setTimeout(() => resolve("Success"), timeout));

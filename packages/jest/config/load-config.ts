@@ -4,7 +4,10 @@ import { join } from "path";
 import { createRequire } from "module";
 import { CraftswainConfig } from "@craftswain/core";
 
-export const loadJSConfig = async (rootPath: string, configFileName = "craftswain.config.js") => {
+export const loadJSConfig = async (
+  rootPath: string,
+  configFileName = "craftswain.config.js"
+) => {
   const targetRequire = createRequire(rootPath);
 
   const resolved = targetRequire.resolve(join(rootPath, configFileName));

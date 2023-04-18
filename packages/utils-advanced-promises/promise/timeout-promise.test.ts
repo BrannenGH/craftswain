@@ -1,5 +1,5 @@
 import { it } from "@jest/globals";
-import TimeoutPromise from "./timeout-promise";
+import { TimeoutPromise } from "./timeout-promise";
 
 const asyncOperation = (timeout: number) =>
   new Promise((resolve) => setTimeout(() => resolve("Success"), timeout));

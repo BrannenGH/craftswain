@@ -3,7 +3,7 @@
  * If canceled, the promise will not call the fulfillment or rejection callbacks.
  * NOTE: It does not stop the base promise from resolving.
  */
-class CancelablePromise<T> implements PromiseLike<T> {
+export class CancelablePromise<T> implements PromiseLike<T> {
   private canceled = false;
 
   /**
@@ -52,5 +52,3 @@ class CancelablePromise<T> implements PromiseLike<T> {
     );
   }
 }
-
-export default CancelablePromise;

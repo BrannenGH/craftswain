@@ -10,6 +10,7 @@ const config: Config = {
   coverageProvider: "v8",
   verbose: true,
   testMatch: ["**/?(*.)+(e2e).[j]s?(x)"],
+  forceExit: true,
 };
 
 export default config;
